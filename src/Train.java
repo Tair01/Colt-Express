@@ -1,44 +1,44 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Train {
     private ArrayList<Wagon> wagons;
+    private HashSet<Personne> personnes;
     private int nombreW;
-    public Train(int n){
+
+    public Train(int n) {
         nombreW = n;
         wagons = new ArrayList<>();
 
         //Premier wagon est un Locomotive
-        wagons.add(new Wagon(0,true));
-        for(int i = 0; i < nombreW; i++){
-            wagons.add(new Wagon(i, false));
-            wagons.add(new Wagon(i, false));
+        wagons.add(new Wagon(wagons.size(),this));
+        for (int i = 0; i < nombreW; i++) {
+            wagons.add(new Wagon(i,this));
         }
+
+        personnes = new HashSet<>();
     }
 
     public ArrayList<Wagon> getWagons() {
         return wagons;
     }
 
-    public int getNombreW(){
+    private Wagon getWagonInd(int i) {
+        return wagons.get(i);
+    }
+
+    public int getNombreW() {
         return nombreW;
     }
 
-    public Wagon getDernierWagon(){
-        return wagons.get(nombreW - 1);
+
+    public HashSet<Personne> getPersonnes(){
+        return personnes;
     }
 
-    public Wagon getPremierWagon(){
-        return wagons.get(0);
-    }
 
-    public Wagon getWagonSuivant(Wagon actuel) {
-        int index = wagons.indexOf(actuel);
-        // Faut faire les cas des exceptions pour l'index
-        return wagons.get(index + 1);
-    }
-
-    public Wagon getWagonPrecedente(Wagon actuel){
-        int index = wagons.indexOf(actuel);
-        return wagons.get(index - 1);
+    public void ajoutePersonne(Personne p){
+        if(p != null) personnes.add(p);
     }
 }
+

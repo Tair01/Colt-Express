@@ -1,4 +1,4 @@
-public class Bandit {
+public class Bandit extends Personne {
     public String nom;
     public Train train;
     public boolean surToit;

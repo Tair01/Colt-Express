@@ -1,31 +1,36 @@
 import java.util.ArrayList;
 
 public class Wagon {
-    private int numero;
-    private boolean locomotive; // true si est un loco et false sinon
-    private ArrayList<Bandit> listBandits;
+    private int numWag;
 
-    public Wagon(int n,boolean l) {
-        numero = n;
-        locomotive = l;
+    // vrai si locomotive, false sinon
+
+    Train train;
+
+    private ArrayList<Butin> butins;
+
+    public Wagon(int n, Train t) {
+        numWag = n;
+        train = t;
     }
 
     public int getNumero() {
-        return numero;
+        return numWag;
     }
-    public boolean isLocomotive(){return locomotive;}
+    public boolean isLocomotive(){return numWag == train.getNombreW();}
 
-    public void ajouterBandit(Bandit b){
-        listBandits.add(b);
-    }
-    public void enleverBandit(Bandit b){
-        listBandits.remove(b);
-    }
-    public boolean estPlein(){
-        return !listBandits.isEmpty();
+    public int nbBanditsPresents(){
+        int s = 0;
+        for(Personne p : train.getPersonnes()){
+            if(p instanceof Bandit && this.equals(p.getPosition())) s++;
+        }
+        return s;
     }
 
-    public ArrayList<Bandit> getListBandits() {
-        return listBandits;
+    public void ajouterButin(Butin b){
+        butins.add(b);
+    }
+    public void retireButin(Butin b){
+        butins.remove(b);
     }
 }

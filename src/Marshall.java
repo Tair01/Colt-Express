@@ -1,3 +1,3 @@
-public class Marshall {
+public class Marshall extends Personne {
 
 }
