@@ -1,9 +1,7 @@
-public class Action {
-    private Bandit bandit;
+public abstract class Action {
+    private Personne personne;
     private Direction direction;
-
-    public Action(Bandit b, Direction d){
-        bandit = b;
-        direction = d;
-    }
+    public Personne getPersonne(){return personne;}
+    public Direction getDirection(){return direction;}
+    abstract void executer(Direction d);
 }

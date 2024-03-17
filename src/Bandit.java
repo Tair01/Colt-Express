@@ -9,8 +9,13 @@ public class Bandit extends Personne {
         surToit = s;
     }
 
+    @Override
+    void effectuerAction(Action a) {
+
+    }
+
     // Initialise le bandit à la position de départ
-    public void positionInit(){
+    /*public void positionInit(){
         if(train.getWagons().isEmpty()){
             throw new RuntimeException("Aucun wagon dans le train");
         }
@@ -21,13 +26,13 @@ public class Bandit extends Personne {
         dernierW.ajouterBandit(this);
         surToit = true;
         wagonActuel = dernierW;
-    }
+    }*/
 
-    public void deplace(Direction d){
-        /** Deplacement de bandit avec des conditions:
+    /*public void deplace(Direction d){
+        *//** Deplacement de bandit avec des conditions:
          1) Si il est sur le dernier wagon, alors il peut pas avancer vers l'arriere
          2) Si il est sur le locomotive, alors il peut pas avancer vers l'avant
-         */
+         *//*
         if(d == Direction.AVANT && wagonActuel.isLocomotive()){
             throw new RuntimeException("Ne peut pas avancer vers l'avant");
         }
@@ -62,6 +67,7 @@ public class Bandit extends Personne {
                 surToit = true; // Car sur le toit du wagon
             }
         }
-    }
+    }*/
+
 }
 
