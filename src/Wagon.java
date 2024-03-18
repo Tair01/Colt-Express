@@ -2,13 +2,8 @@ import java.util.ArrayList;
 
 public class Wagon {
     private int numWag;
-
-    // vrai si locomotive, false sinon
-
     Train train;
-
     private ArrayList<Butin> butins;
-
     public Wagon(int n, Train t) {
         numWag = n;
         train = t;
