@@ -1,6 +1,23 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+
 public class Bandit extends Personne {
+    private HashSet<Butin> butins;
     public Bandit(String n, boolean s) {
         super(n, s);
+        butins = new HashSet<>();
+    }
+    public HashSet<Butin> getButins(){return butins;}
+    public void ajouteButin(Butin b){butins.add(b); }
+    public void lacheButin(){butins.remove(butins.size());}
+    public int montantT(){
+        int t = 0; // total
+        for(Butin b: butins){
+            if(b instanceof Bourse bourse) t += bourse.getValeur();
+            if(b instanceof Bijou) t += Bijou.VALEUR;
+            if(b instanceof Magot) t+= Magot.VALEUR;
+        }
+        return t;
     }
 
     @Override
