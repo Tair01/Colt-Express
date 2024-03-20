@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Wagon {
     private int numWag;
@@ -7,6 +8,7 @@ public class Wagon {
     public Wagon(int n, Train t) {
         numWag = n;
         train = t;
+        butins = new ArrayList<>();
     }
 
     public int getNumero() {
@@ -28,4 +30,5 @@ public class Wagon {
     public void retireButin(Butin b){
         butins.remove(b);
     }
+    public ArrayList<Butin> getButins(){return butins;}
 }
