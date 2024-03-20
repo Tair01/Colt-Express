@@ -3,4 +3,8 @@ public class Magot extends Butin{
     public Magot(){
         super(VALEUR);
     }
+    public void setPosition(Train train){
+        Wagon locomotive = train.getWagonInd(train.getNombreW());
+        this.setPositionButin(locomotive);
+    }
 }

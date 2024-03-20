@@ -7,6 +7,7 @@ public abstract class Butin {
     }
     public int getValeur() {return valeur;}
     public Wagon getPositionButin() {return positionButin;}
+    public void setPositionButin(Wagon w){ positionButin = w;}
     public boolean estRamasse(){return ramasse;}
 }
 

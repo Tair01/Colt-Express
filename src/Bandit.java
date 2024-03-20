@@ -2,14 +2,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Bandit extends Personne {
-    private HashSet<Butin> butins;
+    private ArrayList<Butin> butins;
     public Bandit(String n, boolean s) {
         super(n, s);
-        butins = new HashSet<>();
+        butins = new ArrayList<>();
     }
-    public HashSet<Butin> getButins(){return butins;}
+    public ArrayList<Butin> getButins(){return butins;}
     public void ajouteButin(Butin b){butins.add(b); }
-    public void lacheButin(){butins.remove(butins.size());}
+    public void lacheButin(){
+       var var =  (!butins.isEmpty()) ? butins.remove(butins.size() - 1) : null;
+    }
     public int montantT(){
         int t = 0; // total
         for(Butin b: butins){
