@@ -2,9 +2,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Wagon {
-    private int numWag;
-    Train train;
+    private final int numWag;
+    protected final Train train;
     private ArrayList<Butin> butins;
+
     public Wagon(int n, Train t) {
         numWag = n;
         train = t;
@@ -16,13 +17,13 @@ public class Wagon {
     }
     public boolean isLocomotive(){return numWag == train.getNombreW();}
 
-    public int nbBanditsPresents(){
-        int s = 0;
+    public ArrayList<Bandit> banditsPresents(){
+        ArrayList<Bandit> bandits = new ArrayList<>();
         for(Personne p : train.getPersonnes()){
-            if(p instanceof Bandit && this.equals(p.getPosition())) s++;
+            if(p instanceof Bandit && this.getNumero() == p.getPosition().getNumero()) bandits.add(((Bandit) p));
         }
-        return s;
-    }
+        return bandits;
+}
 
     public void ajouterButin(Butin b){
         butins.add(b);
@@ -31,4 +32,5 @@ public class Wagon {
         butins.remove(b);
     }
     public ArrayList<Butin> getButins(){return butins;}
+
 }

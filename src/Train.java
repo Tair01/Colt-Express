@@ -2,50 +2,37 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Train {
-    private  ArrayList<Wagon> wagons;
-    private HashSet<Personne> personnes;
-    private int nombreW;
+    private final ArrayList<Wagon> wagons;
+    private final HashSet<Personne> personnes;
+    private final int NB_WAGONS;
 
-    public Train(int n) {
-        nombreW = n;
+    public Train(int n, HashSet<Personne> personnes) {
+        NB_WAGONS = n;
         wagons = new ArrayList<>();
-        for (int i = 0; i < nombreW; i++) {
+        // on ajoute NB_WAGONS - 1 wagons au train
+        for (int i = 0; i < NB_WAGONS - 1; i++) {
             wagons.add(new Wagon(i,this));
         }
-        //Dernière wagon est un Locomotive
-        wagons.add(new Wagon(nombreW,this));
-        personnes = new HashSet<>();
+        // dernier wagon : c'est une locomotive
+        wagons.add(new Wagon(NB_WAGONS - 1,this));
+        this.personnes = personnes;
     }
 
     public ArrayList<Wagon> getWagons() {
         return wagons;
     }
 
-    public Wagon getWagonInd(int i) {
+    public Wagon getWagon(int i) {
         return wagons.get(i);
     }
 
     public int getNombreW() {
-        return nombreW;
+        return NB_WAGONS;
     }
-
 
     public HashSet<Personne> getPersonnes(){
         return personnes;
     }
 
-
-    public void ajoutePersonne(Personne p){
-        if(p != null) personnes.add(p);
-    }
-    public void retirerPersonne(Personne p){
-        if(p != null) personnes.remove(p);
-    }
-
-    public void nouveauPosition(Personne p, Wagon newW){
-        this.retirerPersonne(p);
-        p.setPosition(newW);
-        ajoutePersonne(p);
-    }
 }
 

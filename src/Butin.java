@@ -1,13 +1,19 @@
 public abstract class Butin {
-    private int valeur;
-    private Wagon positionButin;
-    private boolean ramasse;
-    public Butin(int v){
+    private final int valeur;
+    private Bandit possesseur;
+    Wagon position;
+    private boolean isRamasse;
+
+    public Butin(int v, Wagon position){
         valeur = v;
+        position = position;
+        possesseur = null;
     }
     public int getValeur() {return valeur;}
-    public Wagon getPositionButin() {return positionButin;}
-    public void setPositionButin(Wagon w){ positionButin = w;}
+
+    /*public Wagon getPositionButin() {return positionButin;}
     public boolean estRamasse(){return ramasse;}
+
+    public void setBandit(Bandit b) { this.b = b;}*/
 }
 

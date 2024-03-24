@@ -4,7 +4,7 @@ public class Deplacer extends Action {
     }
 
     @Override
-    void executer() {
+    String executer() {
         Bandit bandit = (Bandit) getPersonne();
         Wagon wagonActuel = bandit.getPosition();
         Train train = bandit.getPosition().train;
@@ -20,7 +20,7 @@ public class Deplacer extends Action {
         if (d == Direction.AVANT && wagonActuel.isLocomotive()) {
             throw new RuntimeException("Le bandit est sur la locomotive.");
         }
-        if (d == Direction.ARRIERE && wagonActuel == train.getWagonInd(0)) {
+        if (d == Direction.ARRIERE && wagonActuel == train.getWagon(0)) {
             throw new RuntimeException("Le bandit est sur le dernier wagon.");
         }
         if (bandit.isSurLeToit()) {
@@ -29,8 +29,7 @@ public class Deplacer extends Action {
                 int nouveauIndice = wagonActuel.getNumero() - 1;
                 if (nouveauIndice >= 0 && nouveauIndice < train.getNombreW()) {
                     //System.out.println("Déplacement ARRIERE possible");
-                    Wagon nouveauWagon = train.getWagonInd(nouveauIndice);
-                    train.nouveauPosition(bandit, nouveauWagon);
+                    Wagon nouveauWagon = train.getWagon(nouveauIndice);
                     bandit.setSurLeToit(true);
                 }
             }
@@ -39,8 +38,7 @@ public class Deplacer extends Action {
                 int nouveauIndice = wagonActuel.getNumero() + 1;
                 if (nouveauIndice >= 0 && nouveauIndice <= train.getNombreW()) {
                     //System.out.println("Déplacement AVANT possible");
-                    Wagon nouveauWagon = train.getWagonInd(nouveauIndice);
-                    train.nouveauPosition(bandit, nouveauWagon);
+                    Wagon nouveauWagon = train.getWagon(nouveauIndice);
                     bandit.setSurLeToit(true);
                 } else {
                     throw new RuntimeException("Déplacement impossible dans cette direction.Errer d'indice!");
@@ -56,8 +54,7 @@ public class Deplacer extends Action {
                 int nouveauIndice = wagonActuel.getNumero() - 1;
                 if (nouveauIndice >= 0 && nouveauIndice < train.getNombreW()) {
                     //System.out.println("Déplacement ARRIERE possible");
-                    Wagon nouveauWagon = train.getWagonInd(nouveauIndice);
-                    train.nouveauPosition(bandit, nouveauWagon);
+                    Wagon nouveauWagon = train.getWagon(nouveauIndice);
                     bandit.setSurLeToit(false);
                 }
             }
@@ -66,8 +63,7 @@ public class Deplacer extends Action {
                 int nouveauIndice = wagonActuel.getNumero() + 1;
                 if (nouveauIndice >= 0 && nouveauIndice < train.getNombreW()) {
                     //System.out.println("Déplacement AVANT possible");
-                    Wagon nouveauWagon = train.getWagonInd(nouveauIndice);
-                    train.nouveauPosition(bandit, nouveauWagon);
+                    Wagon nouveauWagon = train.getWagon(nouveauIndice);
                     bandit.setSurLeToit(false);
                 } else {
                     throw new RuntimeException("Déplacement impossible dans cette direction.Errer d'indice!");
@@ -77,6 +73,6 @@ public class Deplacer extends Action {
                 //System.out.println("Direction HAUT");
                 bandit.setSurLeToit(true);
             }
-        }
+        } return null;
     }
 }

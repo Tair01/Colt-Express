@@ -1,48 +1,29 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class Bandit extends Personne {
     private ArrayList<Butin> butins;
-    public Bandit(String n, boolean s) {
-        super(n, s);
+
+    public Bandit(String s, Train t) {
+        super(s, true, t);
+        position = t.getWagon(0);
         butins = new ArrayList<>();
+        balles = NB_BALLES;
     }
     public ArrayList<Butin> getButins(){return butins;}
     public void ajouteButin(Butin b){butins.add(b); }
+
+    // On considère que le bandit ne lâche que le dernier butin qu'il a ramassé
     public void lacheButin(){
-       var var =  (!butins.isEmpty()) ? butins.remove(butins.size() - 1) : null;
+        butins.clear();
     }
+
     public int montantT(){
         int t = 0; // total
         for(Butin b: butins){
-            if(b instanceof Bourse bourse) t += bourse.getValeur();
-            if(b instanceof Bijou) t += Bijou.VALEUR;
-            if(b instanceof Magot) t+= Magot.VALEUR;
+            t+=b.getValeur();
         }
         return t;
-    }
-
-    @Override
-    void effectuerAction(Action a, Direction direction) {
-        Personne personne = a.getPersonne();
-        if (personne instanceof Bandit) {
-            Bandit bandit = (Bandit) personne;
-            if (a instanceof Deplacer) {
-                Deplacer d = (Deplacer) a;
-                if (bandit.getPosition() != null) {
-                    d.executer();
-                }
-            } else if (a instanceof Tirer) {
-                Tirer t = (Tirer) a;
-                t.executer();
-            } else if (a instanceof Braquer) {
-                Braquer b = (Braquer) a;
-                b.executer();
-            } else {
-                throw new IllegalArgumentException("Action non prise en charge pour le bandit.");
-            }
-        } else {
-            throw new IllegalArgumentException("Action associée à une personne invalide.");
-        }
     }
 }

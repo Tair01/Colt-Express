@@ -1,10 +1,5 @@
 public class Magot extends Butin{
-    public static final int VALEUR = 1000;
-    public Magot(){
-        super(VALEUR);
-    }
-    public void setPosition(Train train){
-        Wagon locomotive = train.getWagonInd(train.getNombreW());
-        this.setPositionButin(locomotive);
+    public Magot(Train t){
+        super(1000, t.getWagon(t.getNombreW() - 1)) ;
     }
 }

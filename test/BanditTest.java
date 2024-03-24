@@ -1,17 +1,24 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashSet;
+
 import static org.junit.Assert.*;
 
 public class BanditTest {
     private Bandit bandit;
     private Butin butin1, butin2, butin3;
+    private Train train;
     @Before
     public void setUp(){
-        bandit = new Bandit("Alex", true);
-        butin1 = new Bourse(100);
-        butin2 = new Bijou();
-        butin3 = new Magot();
+        HashSet<Personne> personnes = new HashSet<>();
+        Train t = null;
+        bandit = new Bandit("Illia", t);
+        personnes.add(bandit);
+        t = new Train(4, personnes);
+        butin1 = new Bourse(100, train.getWagon(2));
+        butin2 = new Bijou(train.getWagon(0));
+        butin3 = new Magot(train);
     }
 
     @Test
@@ -67,7 +74,7 @@ public class BanditTest {
 
     @Test
     public void montantT() {
-        Bijou bijou1 = new Bijou();
+        Bijou bijou1 = new Bijou(train.getWagon(2));
         bandit.ajouteButin(butin1);
         bandit.ajouteButin(butin2);
         bandit.ajouteButin(butin3);
@@ -91,36 +98,35 @@ public class BanditTest {
 
     @Test
     public void effectuerAction() {
-        Train train = new Train(4);
-        Wagon locomotive = train.getWagonInd(train.getNombreW());
-        Bandit bandit2 = new Bandit("Pierre", true);
+        HashSet<Personne> personnes = new HashSet<>();
+        personnes.add(bandit);
+        Train train = new Train(4,personnes);
+        Deplacer deplacement = new Deplacer(bandit, Direction.AVANT);
 
-        bandit.setPosition(locomotive);
-        Deplacer deplacement = new Deplacer(bandit,Direction.ARRIERE);
 
-        bandit.effectuerAction(deplacement, deplacement.getDirection());
-        assertEquals(train.getNombreW() - 1, bandit.getPosition().getNumero());
+        bandit.effectuerAction(deplacement);
+        assertEquals(1, bandit.getPosition().getNumero());
 
-        bandit.effectuerAction(deplacement, deplacement.getDirection());
-        assertEquals(train.getNombreW() - 2, bandit.getPosition().getNumero());
+        bandit.effectuerAction(deplacement);
+        assertEquals(2, bandit.getPosition().getNumero());
 
-        bandit.effectuerAction(deplacement, deplacement.getDirection());
-        assertEquals(train.getNombreW() - 3, bandit.getPosition().getNumero());
+        bandit.effectuerAction(deplacement);
+        assertEquals(3, bandit.getPosition().getNumero());
 
-        Deplacer deplacement1 = new Deplacer(bandit, Direction.AVANT);
+        Deplacer deplacement1 = new Deplacer(bandit, Direction.ARRIERE);
 
-        bandit.effectuerAction(deplacement1,deplacement1.getDirection());
-        assertEquals(train.getNombreW() - 2, bandit.getPosition().getNumero());
+        bandit.effectuerAction(deplacement1);
+        assertEquals(2, bandit.getPosition().getNumero());
 
-        bandit.effectuerAction(deplacement1,deplacement1.getDirection());
-        assertEquals(train.getNombreW() - 1, bandit.getPosition().getNumero());
+        bandit.effectuerAction(deplacement1);
+        assertEquals(1, bandit.getPosition().getNumero());
 
         Deplacer deplacement2 = new Deplacer(bandit, Direction.BAS);
-        bandit.effectuerAction(deplacement2, deplacement2.getDirection());
+        bandit.effectuerAction(deplacement2);
         assertFalse(bandit.isSurLeToit());
 
         Deplacer deplacement3 = new Deplacer(bandit, Direction.HAUT);
-        bandit.effectuerAction(deplacement3, deplacement3.getDirection());
+        bandit.effectuerAction(deplacement3);
         assertTrue(bandit.isSurLeToit());
     }
 }

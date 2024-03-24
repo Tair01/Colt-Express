@@ -14,4 +14,5 @@ public enum Direction {
             default: throw new RuntimeException("La direction est inconnue");
         }
     }
+
 }

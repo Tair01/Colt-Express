@@ -1,6 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashSet;
+
 import static org.junit.Assert.*;
 
 public class WagonTest {
@@ -8,11 +10,18 @@ public class WagonTest {
     private Wagon wagon1, wagon2, wagon3, wagon4;
     @Before
     public void setUp(){
-        train = new Train(4);
+        HashSet<Personne> personnes = new HashSet<>();
+        Bandit bandit1 = new Bandit("Alex", train);
+        personnes.add(bandit1);
+        Bandit bandit2 = new Bandit("Pierre", train);
+        personnes.add(bandit2);
+        Bandit bandit3 = new Bandit("Olivier", train);
+        personnes.add(bandit3);
+        train = new Train(4, new HashSet<Personne>());
         wagon1 = new Wagon(1, train);
         wagon2 = new Wagon(2, train);
         wagon3 = new Wagon(3, train);
-        wagon4 = new Wagon(4,train); // Le wagon locomotive
+        wagon4 = new Wagon(4, train); // Le wagon locomotive
     }
     @Test
     public void getNumero() {
@@ -32,24 +41,15 @@ public class WagonTest {
 
     @Test
     public void nbBanditsPresents() {
-        Bandit bandit1 = new Bandit("Alex", true);
-        Bandit bandit2 = new Bandit("Pierre", false);
-        Bandit bandit3 = new Bandit("Olivier", true);
-        Wagon wagon = train.getWagonInd(4);
-        bandit1.setPosition(wagon);
-        bandit2.setPosition(wagon);
-        bandit3.setPosition(wagon);
-        train.ajoutePersonne(bandit1);
-        train.ajoutePersonne(bandit2);
-        train.ajoutePersonne(bandit3);
-        assertEquals(3, wagon.nbBanditsPresents());
+        Wagon wagon = train.getWagon(4);
+        assertEquals(3, wagon.banditsPresents().size());
     }
 
     @Test
     public void ajouterButin() {
-        Bourse bourse = new Bourse(100);
-        Bijou bijou = new Bijou();
-        Magot magot = new Magot();
+        Bourse bourse = new Bourse(100, train.getWagon(0));
+        Bijou bijou = new Bijou(train.getWagon(2));
+        Magot magot = new Magot(train);
 
         wagon1.ajouterButin(bijou);
         wagon1.ajouterButin(bourse);
@@ -72,9 +72,9 @@ public class WagonTest {
 
     @Test
     public void retireButin() {
-        Bourse bourse = new Bourse(100);
-        Bijou bijou = new Bijou();
-        Magot magot = new Magot();
+        Bourse bourse = new Bourse(100, train.getWagon(0));
+        Bijou bijou = new Bijou(train.getWagon(2));
+        Magot magot = new Magot(train);
 
         wagon1.ajouterButin(bijou);
         wagon1.ajouterButin(bourse);

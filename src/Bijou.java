@@ -1,8 +1,7 @@
 public class Bijou extends Butin {
-    public static final int VALEUR = 500;
 
-    public Bijou(){
-        super(VALEUR);
+    public Bijou(Wagon position){
+        super(500, position);
     }
 
 }
