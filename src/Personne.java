@@ -5,7 +5,6 @@ public abstract class Personne {
     private final String nom;
     private boolean surLeToit;
     int balles;
-
     public Personne(String n, boolean s, Train t){
         // vérification de l'absence du nom choisi dans le train en question
         if(!(checkNomDejaUtilise(t, n))) {
@@ -23,26 +22,21 @@ public abstract class Personne {
         }
         return false;
     }
-
     public Wagon getPosition(){
         return position;
     }
-
     public int getBalles() {
         return balles;
     }
-
     public void tire(){
         if(balles > 0) balles--;
     }
-
     public boolean isSurLeToit() { return surLeToit; }
     public void setSurLeToit(boolean s){surLeToit = s;}
     void effectuerAction(Action a){
-        if(a.getPersonne().nom == this.nom) a.executer();
+        if(a.getPersonne().getNom().equals(getNom())) a.executer();
     }
     public String getNom(){
         return nom;
     }
-
 }

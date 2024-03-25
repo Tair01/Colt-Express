@@ -5,74 +5,61 @@ public class Deplacer extends Action {
 
     @Override
     String executer() {
-        Bandit bandit = (Bandit) getPersonne();
-        Wagon wagonActuel = bandit.getPosition();
-        Train train = bandit.getPosition().train;
+        Personne personne = getPersonne();
+        Wagon wagonActuel = personne.getPosition();
+        Train train = personne.getPosition().train;
         Direction d = getDirection();
+        int nouveauIndice;
+        boolean toit;
 
-        // 4 conditions sur le deplacement
-        if (d == Direction.HAUT && bandit.isSurLeToit()) {
+        StringBuilder description = new StringBuilder();
+        description.append("Direction: ").append(d).append("\n");
+        description.append("Position actuelle du bandit: ").append(wagonActuel.getNumero()).append("\n\n");
+
+
+        // Vérification des conditions de déplacement
+        if (d == Direction.HAUT && personne.isSurLeToit()) {
             throw new RuntimeException("Le bandit est déjà sur le toit.");
-        }
-        if (d == Direction.BAS && !bandit.isSurLeToit()) {
+        }if (d == Direction.BAS && !personne.isSurLeToit()) {
             throw new RuntimeException("Le bandit est déjà à l'intérieur.");
-        }
-        if (d == Direction.AVANT && wagonActuel.isLocomotive()) {
+        }if (d == Direction.AVANT && wagonActuel.isLocomotive()) {
             throw new RuntimeException("Le bandit est sur la locomotive.");
-        }
-        if (d == Direction.ARRIERE && wagonActuel == train.getWagon(0)) {
+        }if (d == Direction.ARRIERE && wagonActuel.equals(train.getWagon(0))) {
             throw new RuntimeException("Le bandit est sur le dernier wagon.");
         }
-        if (bandit.isSurLeToit()) {
-            if (d == Direction.ARRIERE) {
-                //System.out.println("Direction ARRIERE");
-                int nouveauIndice = wagonActuel.getNumero() - 1;
+        if(personne instanceof Marshall){
+            System.out.println("C'est bien un Marshall");
+            if(Math.random() <= Marshall.NERVOSITE_MARSHALL){
+                System.out.println("La position du Marshall est:" + personne.getPosition());
+                Direction[] directionsPossibleM = {Direction.AVANT, Direction.ARRIERE};
+                Direction directionMarshall = directionsPossibleM[(int) (Math.random() * directionsPossibleM.length)];
+                Wagon wagonMarshall = train.getWagon(train.getNombreW() - 1);
+                int nouvIndiceMarshall = (directionMarshall == Direction.ARRIERE) ? wagonMarshall.getNumero() - 1 : wagonMarshall.getNumero()  + 1;
+                if(nouvIndiceMarshall >= 0 && nouvIndiceMarshall < train.getNombreW()) {
+                    System.out.println("Deplacement Possible");
+                    wagonMarshall = train.getWagon(nouvIndiceMarshall);
+                    personne.position = wagonMarshall;
+                    System.out.println("Sa nouvelle position est:" + personne.getPosition());
+                }
+            }
+        }
+        if(personne instanceof Bandit) {
+            if (d == Direction.AVANT || d == Direction.ARRIERE) {
+                description.append("Un déplacement\n");
+                nouveauIndice = (d == Direction.ARRIERE) ? wagonActuel.getNumero() - 1 : wagonActuel.getNumero() + 1;
                 if (nouveauIndice >= 0 && nouveauIndice < train.getNombreW()) {
-                    //System.out.println("Déplacement ARRIERE possible");
-                    Wagon nouveauWagon = train.getWagon(nouveauIndice);
-                    bandit.setSurLeToit(true);
+                    description.append("Déplacement possible\n");
+                    wagonActuel = train.getWagon(nouveauIndice);
+                    personne.setSurLeToit(personne.isSurLeToit());
+                    personne.position = wagonActuel;
                 }
             }
-            if (d == Direction.AVANT) {
-                //System.out.println("Direction AVANT");
-                int nouveauIndice = wagonActuel.getNumero() + 1;
-                if (nouveauIndice >= 0 && nouveauIndice <= train.getNombreW()) {
-                    //System.out.println("Déplacement AVANT possible");
-                    Wagon nouveauWagon = train.getWagon(nouveauIndice);
-                    bandit.setSurLeToit(true);
-                } else {
-                    throw new RuntimeException("Déplacement impossible dans cette direction.Errer d'indice!");
-                }
+            if (d == Direction.BAS || d == Direction.HAUT) {
+                description.append("Déplacement vers le Haut ou vers le Bas\n");
+                personne.setSurLeToit(d == Direction.HAUT);
             }
-            if (d == Direction.BAS) {
-                //System.out.println("Direction BAS");
-                bandit.setSurLeToit(false);
-            }
-        } else {
-            if (d == Direction.ARRIERE) {
-                //System.out.println("Direction ARRIERE");
-                int nouveauIndice = wagonActuel.getNumero() - 1;
-                if (nouveauIndice >= 0 && nouveauIndice < train.getNombreW()) {
-                    //System.out.println("Déplacement ARRIERE possible");
-                    Wagon nouveauWagon = train.getWagon(nouveauIndice);
-                    bandit.setSurLeToit(false);
-                }
-            }
-            if (d == Direction.AVANT) {
-                //System.out.println("Direction AVANT");
-                int nouveauIndice = wagonActuel.getNumero() + 1;
-                if (nouveauIndice >= 0 && nouveauIndice < train.getNombreW()) {
-                    //System.out.println("Déplacement AVANT possible");
-                    Wagon nouveauWagon = train.getWagon(nouveauIndice);
-                    bandit.setSurLeToit(false);
-                } else {
-                    throw new RuntimeException("Déplacement impossible dans cette direction.Errer d'indice!");
-                }
-            }
-            if (d == Direction.HAUT) {
-                //System.out.println("Direction HAUT");
-                bandit.setSurLeToit(true);
-            }
-        } return null;
+        }
+        description.append("Nouvelle position du bandit: ").append(personne.getPosition().getNumero()).append("\n");
+        return description.toString();
     }
 }

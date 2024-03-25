@@ -15,7 +15,7 @@ public class Train {
         }
         // dernier wagon : c'est une locomotive
         wagons.add(new Wagon(NB_WAGONS - 1,this));
-        this.personnes = personnes;
+        this.personnes = personnes != null ? personnes : new HashSet<>();
     }
 
     public ArrayList<Wagon> getWagons() {
@@ -31,7 +31,7 @@ public class Train {
     }
 
     public HashSet<Personne> getPersonnes(){
-        return personnes;
+        return personnes != null ? personnes : new HashSet<>();
     }
 
 }
