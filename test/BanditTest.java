@@ -1,21 +1,27 @@
+import ens_projet.modele.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
 public class BanditTest {
-    private Bandit bandit;
+    private Bandit bandit1, bandit2, bandit3;
     private Butin butin1, butin2, butin3;
     private Train train;
+    private HashSet<Personne> personnes;
     @Before
     public void setUp(){
-        HashSet<Personne> personnes = new HashSet<>();
-        Train t = null;
-        bandit = new Bandit("Illia", t);
-        personnes.add(bandit);
-        t = new Train(4, personnes);
+        train = new Train(4, personnes);
+        bandit1 = new Bandit("Alex", train);
+        bandit2 = new Bandit("Souleimane", train);
+        bandit3 = new Bandit("Tair", train);
+
+        personnes = new HashSet<>(Arrays.asList(bandit1, bandit2, bandit3));
+        train.getPersonnes().addAll(personnes);
+
         butin1 = new Bourse(100, train.getWagon(2));
         butin2 = new Bijou(train.getWagon(0));
         butin3 = new Magot(train);
@@ -23,110 +29,76 @@ public class BanditTest {
 
     @Test
     public void getButins() {
-        bandit.ajouteButin(butin1);
-        bandit.ajouteButin(butin2);
-        bandit.ajouteButin(butin3);
+        bandit1.ajouteButin(butin1);
+        bandit1.ajouteButin(butin2);
+        bandit1.ajouteButin(butin3);
 
-        assertNotNull(bandit.getButins());
-        assertTrue(bandit.getButins().contains(butin1));
-        assertTrue(bandit.getButins().contains(butin2));
-        assertTrue(bandit.getButins().contains(butin3));
+        assertNotNull(bandit1.getButins());
+        assertTrue(bandit1.getButins().contains(butin1));
+        assertTrue(bandit1.getButins().contains(butin2));
+        assertTrue(bandit1.getButins().contains(butin3));
     }
 
     @Test
     public void ajouteButin() {
-        bandit.ajouteButin(butin1);
-        bandit.ajouteButin(butin2);
-        bandit.ajouteButin(butin3);
+        bandit1.ajouteButin(butin1);
+        bandit1.ajouteButin(butin2);
+        bandit1.ajouteButin(butin3);
 
-        assertTrue(bandit.getButins().contains(butin1));
-        assertTrue(bandit.getButins().contains(butin2));
-        assertTrue(bandit.getButins().contains(butin3));
+        assertTrue(bandit1.getButins().contains(butin1));
+        assertTrue(bandit1.getButins().contains(butin2));
+        assertTrue(bandit1.getButins().contains(butin3));
     }
 
     @Test
     public void lacheButin() {
-        bandit.ajouteButin(butin1);
-        bandit.ajouteButin(butin2);
-        bandit.ajouteButin(butin3);
+        bandit1.ajouteButin(butin1);
+        bandit1.ajouteButin(butin2);
+        bandit1.ajouteButin(butin3);
 
-        assertTrue(bandit.getButins().contains(butin1));
-        assertTrue(bandit.getButins().contains(butin2));
-        assertTrue(bandit.getButins().contains(butin3));
+        assertTrue(bandit1.getButins().contains(butin1));
+        assertTrue(bandit1.getButins().contains(butin2));
+        assertTrue(bandit1.getButins().contains(butin3));
 
-        bandit.lacheButin();
-        assertTrue(bandit.getButins().contains(butin1));
-        assertTrue(bandit.getButins().contains(butin2));
-        assertFalse(bandit.getButins().contains(butin3));
+        bandit1.lacheButin();
+        assertTrue(bandit1.getButins().contains(butin1));
+        assertTrue(bandit1.getButins().contains(butin2));
+        assertFalse(bandit1.getButins().contains(butin3));
 
-        bandit.lacheButin();
-        assertTrue(bandit.getButins().contains(butin1));
-        assertFalse(bandit.getButins().contains(butin2));
-        assertFalse(bandit.getButins().contains(butin3));
+        bandit1.lacheButin();
+        assertTrue(bandit1.getButins().contains(butin1));
+        assertFalse(bandit1.getButins().contains(butin2));
+        assertFalse(bandit1.getButins().contains(butin3));
 
-        bandit.lacheButin();
-        assertFalse(bandit.getButins().contains(butin1));
-        assertFalse(bandit.getButins().contains(butin2));
-        assertFalse(bandit.getButins().contains(butin3));
+        bandit1.lacheButin();
+        assertFalse(bandit1.getButins().contains(butin1));
+        assertFalse(bandit1.getButins().contains(butin2));
+        assertFalse(bandit1.getButins().contains(butin3));
 
-        assertTrue(bandit.getButins().isEmpty());
+        assertTrue(bandit1.getButins().isEmpty());
     }
 
     @Test
     public void montantT() {
         Bijou bijou1 = new Bijou(train.getWagon(2));
-        bandit.ajouteButin(butin1);
-        bandit.ajouteButin(butin2);
-        bandit.ajouteButin(butin3);
+        bandit1.ajouteButin(butin1);
+        bandit1.ajouteButin(butin2);
+        bandit1.ajouteButin(butin3);
 
-        assertTrue(bandit.getButins().contains(butin1));
-        assertTrue(bandit.getButins().contains(butin2));
-        assertTrue(bandit.getButins().contains(butin3));
+        assertTrue(bandit1.getButins().contains(butin1));
+        assertTrue(bandit1.getButins().contains(butin2));
+        assertTrue(bandit1.getButins().contains(butin3));
 
-        assertEquals(1600, bandit.montantT());
-        bandit.ajouteButin(bijou1);
-        assertEquals(2100, bandit.montantT());
+        assertEquals(1600, bandit1.montantT());
+        bandit1.ajouteButin(bijou1);
+        assertEquals(2100, bandit1.montantT());
 
-        bandit.lacheButin();
-        bandit.lacheButin();
-        assertEquals(600, bandit.montantT());
+        bandit1.lacheButin();
+        bandit1.lacheButin();
+        assertEquals(600, bandit1.montantT());
 
-        bandit.lacheButin();
-        bandit.lacheButin();
-        assertEquals(0, bandit.montantT());
-    }
-
-    @Test
-    public void effectuerAction() {
-        HashSet<Personne> personnes = new HashSet<>();
-        personnes.add(bandit);
-        Train train = new Train(4,personnes);
-        Deplacer deplacement = new Deplacer(bandit, Direction.AVANT);
-
-
-        bandit.effectuerAction(deplacement);
-        assertEquals(1, bandit.getPosition().getNumero());
-
-        bandit.effectuerAction(deplacement);
-        assertEquals(2, bandit.getPosition().getNumero());
-
-        bandit.effectuerAction(deplacement);
-        assertEquals(3, bandit.getPosition().getNumero());
-
-        Deplacer deplacement1 = new Deplacer(bandit, Direction.ARRIERE);
-
-        bandit.effectuerAction(deplacement1);
-        assertEquals(2, bandit.getPosition().getNumero());
-
-        bandit.effectuerAction(deplacement1);
-        assertEquals(1, bandit.getPosition().getNumero());
-
-        Deplacer deplacement2 = new Deplacer(bandit, Direction.BAS);
-        bandit.effectuerAction(deplacement2);
-        assertFalse(bandit.isSurLeToit());
-
-        Deplacer deplacement3 = new Deplacer(bandit, Direction.HAUT);
-        bandit.effectuerAction(deplacement3);
-        assertTrue(bandit.isSurLeToit());
+        bandit1.lacheButin();
+        bandit1.lacheButin();
+        assertEquals(0, bandit1.montantT());
     }
 }

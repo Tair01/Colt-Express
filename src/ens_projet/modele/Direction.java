@@ -1,3 +1,5 @@
+package ens_projet.modele;
+
 import java.util.Random;
 
 public enum Direction {

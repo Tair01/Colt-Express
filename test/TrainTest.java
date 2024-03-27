@@ -1,3 +1,5 @@
+import ens_projet.modele.Personne;
+import ens_projet.modele.Train;
 import org.junit.Before;
 import org.junit.Test;
 

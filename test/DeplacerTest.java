@@ -1,4 +1,4 @@
-import org.junit.Assert;
+import ens_projet.modele.*;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -98,37 +98,37 @@ public class DeplacerTest {
     }
     @Test
     public void testMarshallMovesBeforeBanditActions() {
-        // Initialisation du jeu avec un Marshall et des bandits
+        // Initialisation du jeu avec un ens_projet.modele.Marshall et des bandits
         Action action = new Deplacer(marshall, Direction.AVANT);
         // Vérifiez les positions initiales des bandits
         assertEquals(0, bandit1.getPosition().getNumero());
         assertEquals(0, bandit2.getPosition().getNumero());
         assertEquals(2, bandit3.getPosition().getNumero());
 
-        // Effectuez plusieurs actions de bandit et vérifiez le déplacement du Marshall
+        // Effectuez plusieurs actions de bandit et vérifiez le déplacement du ens_projet.modele.Marshall
         for (int i = 0; i < 5; i++) {
-            // Déplacement aléatoire du Marshall avant chaque action de bandit
+            // Déplacement aléatoire du ens_projet.modele.Marshall avant chaque action de bandit
             action.executer();
 
-            // Action de bandit
+            // ens_projet.modele.Action de bandit
             Action action1 = new Deplacer(bandit1, Direction.AVANT);
             action1.executer();
             // Vérifiez la nouvelle position de bandit1
             assertEquals(wagon2, bandit1.getPosition());
 
-            // Action de bandit
+            // ens_projet.modele.Action de bandit
             Action action2 = new Deplacer(bandit3, Direction.ARRIERE);
             action2.executer();
             // Vérifiez la nouvelle position de bandit3
             assertEquals(wagon2, bandit3.getPosition());
 
-            // Action de bandit
+            // ens_projet.modele.Action de bandit
             Action action3 = new Deplacer(bandit2, Direction.BAS);
             action3.executer();
             // Vérifiez l'état de bandit2
             assertFalse(bandit2.isSurLeToit());
 
-            // Action de bandit
+            // ens_projet.modele.Action de bandit
             Action action4 = new Deplacer(bandit2, Direction.HAUT);
             action4.executer();
             // Vérifiez l'état de bandit2

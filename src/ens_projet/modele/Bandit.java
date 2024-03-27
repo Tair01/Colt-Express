@@ -1,3 +1,5 @@
+package ens_projet.modele;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
@@ -9,14 +11,14 @@ public class Bandit extends Personne {
         super(s, true, t);
         position = t.getWagon(0);
         butins = new ArrayList<>();
-        balles = NB_BALLES;
+        balles = Personne.NB_BALLES;
     }
     public ArrayList<Butin> getButins(){return butins;}
     public void ajouteButin(Butin b){butins.add(b); }
 
     // On considère que le bandit ne lâche que le dernier butin qu'il a ramassé
     public void lacheButin(){
-        butins.clear();
+        var var =  (!butins.isEmpty()) ? butins.remove(butins.size() - 1) : null;
     }
 
     public int montantT(){
@@ -24,6 +26,7 @@ public class Bandit extends Personne {
         for(Butin b: butins){
             t+=b.getValeur();
         }
+        System.out.println(this.getNom() + " a " + t  + "$");
         return t;
     }
 }

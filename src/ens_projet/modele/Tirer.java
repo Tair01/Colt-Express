@@ -1,12 +1,19 @@
+package ens_projet.modele;
+
+import ens_projet.modele.Action;
+import ens_projet.modele.Bandit;
+import ens_projet.modele.Direction;
+import ens_projet.modele.Personne;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Tirer extends Action{
+public class Tirer extends Action {
     public Tirer(Personne p, Direction d) {
         super(p,d);
     }
     @Override
-    String executer() {
+    public String executer() {
         if (auteur.getBalles() > 0) {
             if (auteur instanceof Bandit) {
                 Random random = new Random();

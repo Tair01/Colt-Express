@@ -1,19 +1,20 @@
+package ens_projet.modele;
+
 public class Deplacer extends Action {
     public Deplacer(Personne p, Direction d) {
         super(p, d);
     }
 
     @Override
-    String executer() {
+    public String executer() {
         Personne personne = getPersonne();
         Wagon wagonActuel = personne.getPosition();
         Train train = personne.getPosition().train;
         Direction d = getDirection();
         int nouveauIndice;
-        boolean toit;
 
         StringBuilder description = new StringBuilder();
-        description.append("Direction: ").append(d).append("\n");
+        description.append("ens_projet.modele.Direction: ").append(d).append("\n");
         description.append("Position actuelle du bandit: ").append(wagonActuel.getNumero()).append("\n\n");
 
 
@@ -27,10 +28,13 @@ public class Deplacer extends Action {
         }if (d == Direction.ARRIERE && wagonActuel.equals(train.getWagon(0))) {
             throw new RuntimeException("Le bandit est sur le dernier wagon.");
         }
+
+        System.out.println(personne.getNom() + " se déplace " + d);
+
         if(personne instanceof Marshall){
-            System.out.println("C'est bien un Marshall");
+            System.out.println("C'est bien un ens_projet.modele.Marshall");
             if(Math.random() <= Marshall.NERVOSITE_MARSHALL){
-                System.out.println("La position du Marshall est:" + personne.getPosition());
+                System.out.println("La position du ens_projet.modele.Marshall est:" + personne.getPosition());
                 Direction[] directionsPossibleM = {Direction.AVANT, Direction.ARRIERE};
                 Direction directionMarshall = directionsPossibleM[(int) (Math.random() * directionsPossibleM.length)];
                 Wagon wagonMarshall = train.getWagon(train.getNombreW() - 1);
@@ -40,6 +44,7 @@ public class Deplacer extends Action {
                     wagonMarshall = train.getWagon(nouvIndiceMarshall);
                     personne.position = wagonMarshall;
                     System.out.println("Sa nouvelle position est:" + personne.getPosition());
+                    System.out.println();
                 }
             }
         }

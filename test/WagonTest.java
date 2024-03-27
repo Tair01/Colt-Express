@@ -1,34 +1,55 @@
+import ens_projet.modele.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
 public class WagonTest {
+    private Bandit bandit1, bandit2, bandit3;
+    private Marshall marshall;
     private Train train;
+    private HashSet<Personne> personnes;
     private Wagon wagon1, wagon2, wagon3, wagon4;
+    private Butin butin1, butin2, butin3;
     @Before
-    public void setUp(){
-        HashSet<Personne> personnes = new HashSet<>();
-        Bandit bandit1 = new Bandit("Alex", train);
-        personnes.add(bandit1);
-        Bandit bandit2 = new Bandit("Pierre", train);
-        personnes.add(bandit2);
-        Bandit bandit3 = new Bandit("Olivier", train);
-        personnes.add(bandit3);
-        train = new Train(4, new HashSet<Personne>());
-        wagon1 = new Wagon(1, train);
-        wagon2 = new Wagon(2, train);
-        wagon3 = new Wagon(3, train);
-        wagon4 = new Wagon(4, train); // Le wagon locomotive
+    public void setUp() {
+        // Initialise le train avec la liste de personnes
+        train = new Train(4, personnes);
+
+        // Crée les instances de ens_projet.modele.Bandit et ens_projet.modele.Marshall avec la liste de personnes
+        bandit1 = new Bandit("Alex", train);
+        bandit2 = new Bandit("Souleimane", train);
+        bandit3 = new Bandit("Tair", train);
+        marshall = new Marshall("Pierre", train);
+
+        personnes = new HashSet<>(Arrays.asList(bandit1, bandit2, bandit3, marshall));
+        train.getPersonnes().addAll(personnes);
+
+        wagon1 = train.getWagon(0);
+        wagon2 = train.getWagon(1);
+        wagon3 = train.getWagon(2);
+        wagon4 = train.getWagon(3);
+
+        bandit1.position = wagon1;
+        bandit2.position = wagon1;
+        bandit3.position = wagon1;
+        marshall.position = wagon4;
+
+
+        butin1 = new Bourse(100, train.getWagon(0));
+        butin2 = new Bijou(train.getWagon(0));
+        butin3 = new Magot(train);
     }
     @Test
     public void getNumero() {
-        assertEquals(1, wagon1.getNumero());
-        assertEquals(2, wagon2.getNumero());
-        assertEquals(3, wagon3.getNumero());
-        assertEquals(4, wagon4.getNumero());
+        assertEquals(0, wagon1.getNumero());
+        assertEquals(1, wagon2.getNumero());
+        assertEquals(2, wagon3.getNumero());
+        assertEquals(3, wagon4.getNumero());
         assertNotEquals(wagon1.getNumero(), wagon2.getNumero());
         assertNotEquals(wagon2.getNumero(), wagon3.getNumero());
     }
@@ -40,63 +61,86 @@ public class WagonTest {
     }
 
     @Test
-    public void nbBanditsPresents() {
-        Wagon wagon = train.getWagon(4);
-        assertEquals(3, wagon.banditsPresents().size());
+    public void banditsPresents() {
+        assertEquals(3, wagon1.banditsPresents().size());
     }
 
     @Test
     public void ajouterButin() {
-        Bourse bourse = new Bourse(100, train.getWagon(0));
-        Bijou bijou = new Bijou(train.getWagon(2));
-        Magot magot = new Magot(train);
-
-        wagon1.ajouterButin(bijou);
-        wagon1.ajouterButin(bourse);
-        wagon2.ajouterButin(bijou);
-        wagon2.ajouterButin(bourse);
-        wagon3.ajouterButin(bijou);
-        wagon3.ajouterButin(bourse);
-        wagon4.ajouterButin(magot); // la position de magot est sur le wagon locomotive
+        wagon1.ajouterButin(butin2);
+        wagon1.ajouterButin(butin1);
+        wagon2.ajouterButin(butin2);
+        wagon2.ajouterButin(butin1);
+        wagon3.ajouterButin(butin2);
+        wagon3.ajouterButin(butin1);
+        wagon4.ajouterButin(butin3); // la position de butin3 est sur le wagon locomotive
 
         assertNotNull(wagon1.getButins());
         assertNotNull(wagon2.getButins());
         assertNotNull(wagon3.getButins());
         assertNotNull(wagon4.getButins());
 
-        assertTrue(wagon1.getButins().contains(bijou) && wagon1.getButins().contains(bourse));
-        assertTrue(wagon2.getButins().contains(bijou) && wagon2.getButins().contains(bourse));
-        assertTrue(wagon3.getButins().contains(bijou) && wagon3.getButins().contains(bourse));
-        assertTrue(wagon4.getButins().contains(magot));
+        assertTrue(wagon1.getButins().contains(butin2) && wagon1.getButins().contains(butin1));
+        assertTrue(wagon2.getButins().contains(butin2) && wagon2.getButins().contains(butin1));
+        assertTrue(wagon3.getButins().contains(butin2) && wagon3.getButins().contains(butin1));
+        assertTrue(wagon4.getButins().contains(butin3));
     }
 
     @Test
     public void retireButin() {
-        Bourse bourse = new Bourse(100, train.getWagon(0));
-        Bijou bijou = new Bijou(train.getWagon(2));
-        Magot magot = new Magot(train);
-
-        wagon1.ajouterButin(bijou);
-        wagon1.ajouterButin(bourse);
-        wagon2.ajouterButin(bijou);
-        wagon2.ajouterButin(bourse);
-        wagon4.ajouterButin(magot);
+        wagon1.ajouterButin(butin2);
+        wagon1.ajouterButin(butin1);
+        wagon2.ajouterButin(butin2);
+        wagon2.ajouterButin(butin1);
+        wagon4.ajouterButin(butin3);
 
         assertNotNull(wagon1.getButins());
         assertNotNull(wagon2.getButins());
         assertNotNull(wagon4.getButins());
 
-        assertTrue(wagon1.getButins().contains(bijou) && wagon1.getButins().contains(bourse));
-        assertTrue(wagon2.getButins().contains(bijou) && wagon2.getButins().contains(bourse));
-        assertTrue(wagon4.getButins().contains(magot));
+        assertTrue(wagon1.getButins().contains(butin2) && wagon1.getButins().contains(butin1));
+        assertTrue(wagon2.getButins().contains(butin2) && wagon2.getButins().contains(butin1));
+        assertTrue(wagon4.getButins().contains(butin3));
 
-        wagon1.retireButin(bijou);
-        wagon1.retireButin(bourse);
-        wagon2.retireButin(bijou);
-        wagon4.retireButin(magot);
+        wagon1.retireButin(butin2);
+        wagon1.retireButin(butin1);
+        wagon2.retireButin(butin2);
+        wagon4.retireButin(butin3);
 
         assertTrue(wagon1.getButins().isEmpty());
-        assertTrue(!wagon2.getButins().contains(bijou) && wagon2.getButins().contains(bourse));
+        assertTrue(!wagon2.getButins().contains(butin2) && wagon2.getButins().contains(butin1));
         assertTrue(wagon4.getButins().isEmpty());
+    }
+
+    @Test
+    public void butinsPresents(){
+        wagon1.ajouterButin(butin1);
+        wagon1.ajouterButin(butin2);
+        assertEquals(2, wagon1.butinsPresents().size());
+    }
+
+    @Test
+    public void getButins(){
+        wagon1.ajouterButin(butin1);
+        wagon1.ajouterButin(butin2);
+        wagon2.ajouterButin(butin2);
+        wagon3.ajouterButin(butin3);
+        wagon4.ajouterButin(butin3);
+
+        ArrayList<Butin> butinsWagon1 = wagon1.getButins();
+        ArrayList<Butin> butinsWagon2 = wagon2.getButins();
+        ArrayList<Butin> butinsWagon3 = wagon3.getButins();
+        ArrayList<Butin> butinsWagon4 = wagon4.getButins();
+
+        assertEquals(2, butinsWagon1.size());
+        assertEquals(1, butinsWagon2.size());
+        assertEquals(1, butinsWagon3.size());
+        assertEquals(1, butinsWagon4.size());
+
+        assertTrue(butinsWagon1.contains(butin1));
+        assertTrue(butinsWagon1.contains(butin2));
+        assertTrue(butinsWagon2.contains(butin2));
+        assertTrue(butinsWagon3.contains(butin3));
+        assertTrue(butinsWagon4.contains(butin3));
     }
 }

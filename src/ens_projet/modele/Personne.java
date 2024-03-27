@@ -1,6 +1,8 @@
+package ens_projet.modele;
+
 public abstract class Personne {
     static final int NB_BALLES = 6;
-    Wagon position;
+    public Wagon position;
     Train train;
     private final String nom;
     private boolean surLeToit;
