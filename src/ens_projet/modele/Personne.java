@@ -2,7 +2,7 @@ package ens_projet.modele;
 
 public abstract class Personne {
     static final int NB_BALLES = 6;
-    public Wagon position;
+    protected Wagon position;
     Train train;
     private final String nom;
     private boolean surLeToit;
@@ -27,6 +27,9 @@ public abstract class Personne {
     public Wagon getPosition(){
         return position;
     }
+
+    public void setPosition(Wagon w){ position =  w;}
+
     public int getBalles() {
         return balles;
     }
@@ -34,7 +37,7 @@ public abstract class Personne {
         if(balles > 0) balles--;
     }
     public boolean isSurLeToit() { return surLeToit; }
-    public void setSurLeToit(boolean s){surLeToit = s;}
+    public void setSurLeToit(){surLeToit = !(surLeToit);}
     void effectuerAction(Action a){
         if(a.getPersonne().getNom().equals(getNom())) a.executer();
     }

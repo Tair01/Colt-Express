@@ -34,10 +34,10 @@ public class WagonTest {
         wagon3 = train.getWagon(2);
         wagon4 = train.getWagon(3);
 
-        bandit1.position = wagon1;
-        bandit2.position = wagon1;
-        bandit3.position = wagon1;
-        marshall.position = wagon4;
+        bandit1.setPosition(wagon1);
+        bandit2.setPosition(wagon2);
+        bandit3.setPosition(wagon3);
+        marshall.setPosition(wagon4);
 
 
         butin1 = new Bourse(100, train.getWagon(0));

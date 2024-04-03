@@ -13,9 +13,11 @@ public abstract class Action {
 
 }
 
-// TODO : 5. retirer tous les imports de modules, méthodes, attributs et variables inutilisés
-// TODO : 4. intégrer le patron de conception MVC
-// TODO : 3. vérifier les tests, les changer et faire en sorte à ce qu'ils passent
-// TODO : 2. arranger/supprimer/remplacer les méthodes executer() dans ens_projet.modele.Deplacer, random() dans ens_projet.modele.Direction,
-// TODO : 1. compléter les classes ens_projet.modele.Marshall, ens_projet.modele.Braquer, ens_projet.modele.Tirer et ens_projet.modele.Direction
-// TODO : 0. revoir la logique du jeu et faire les modifications nécessaires (notamment : est-ce que le code permet aux bandits de lâcher un butin sans se faire tirer dessus ?)
+// TODO : ajouter des munitions dans les wagons -> 06/04
+// TODO : modifier les classes pour MVC -> 07/04
+// TODO : coder la classe FenetreJeu -> 14/04
+// TODO : vérifier/améliorer les tests -> 15/04
+// TODO : rajouter de la documentation et améliorer le code si possible (optimisation, suppression variables/méthodes inutilisées...etc.) -> 15/04
+// TODO : remplir fichier README -> 15/04
+
+// soutenance : 22/04

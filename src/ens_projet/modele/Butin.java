@@ -9,15 +9,19 @@ public abstract class Butin {
     private boolean isRamasse;
     private String nom;
 
-    public Butin(int v, Wagon position, String n){
+    public Butin(int v, Wagon position){
         valeur = v;
         position = position;
         possesseur = null;
-        nom = n;
     }
     public int getValeur() {return valeur;}
 
-    public String getNom() { return nom; }
+    public String getNom() {
+        if(this instanceof Bijou) return "bijou (500$)";
+        else if (this instanceof Magot) return "magot (1000$)";
+        else return "bourse (" + valeur + "$)";
+
+    }
 
     /*public ens_projet.modele.Wagon getPositionButin() {return positionButin;}
     public boolean estRamasse(){return ramasse;}

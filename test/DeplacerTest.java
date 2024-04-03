@@ -35,10 +35,10 @@ public class DeplacerTest {
         wagon3 = train.getWagon(2);
         wagon4 = train.getWagon(3);
 
-        bandit1.position = wagon1;
-        bandit2.position = wagon1;
-        bandit3.position = wagon3;
-        marshall.position = wagon4;
+        bandit1.setPosition(wagon1);
+        bandit2.setPosition(wagon2);
+        bandit3.setPosition(wagon3);
+        marshall.setPosition(wagon4);
     }
     @Test
     public void executer() {
@@ -69,14 +69,13 @@ public class DeplacerTest {
     @Test
     public void testExceptions() {
         // Cas où le bandit est déjà sur le toit
-        bandit1.setSurLeToit(true);
         Action action1 = new Deplacer(bandit1, Direction.HAUT);
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("Le bandit est déjà sur le toit.");
         action1.executer();
 
         // Cas où le bandit est déjà à l'intérieur
-        bandit1.setSurLeToit(false);
+        bandit1.setSurLeToit();
         Action action2 = new Deplacer(bandit1, Direction.BAS);
         exceptionRule.expect(RuntimeException.class);
         exceptionRule.expectMessage("Le bandit est déjà à l'intérieur.");

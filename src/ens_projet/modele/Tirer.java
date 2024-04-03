@@ -56,10 +56,12 @@ public class Tirer extends Action {
                     auteur.tire();
                     banditsWagon.get(i).lacheButin();
                     banditsTouches.add(banditsWagon.get(i));
+                    i++;
                 }
                 String s = auteur.getNom() + "a tiré sur : ";
                 for (Bandit b : banditsTouches) {
                     s += (b.getNom() + " ");
+                    b.setSurLeToit();
                 }
                 return s;
             }

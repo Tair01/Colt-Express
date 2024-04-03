@@ -12,22 +12,23 @@ public class Braquer extends Action {
     }
     @Override
     public String executer() {
+        String message = null;
         if(auteur instanceof Bandit){
             Random random = new Random();
             ArrayList<Butin> butinsW = auteur.getPosition().butinsPresents();
             if(!butinsW.isEmpty()){
                 Butin butinRecupere = butinsW.get(random.nextInt(butinsW.size()));
                 ((Bandit) auteur).ajouteButin(butinRecupere);
-                System.out.println(((Bandit) auteur).getNom() + " a récupéré le butin :" + butinRecupere.getNom());
                 auteur.getPosition().retireButin(butinRecupere);
-
-                return ((Bandit) auteur).getNom() + "a récupéré un butin au hasard parmi ceux présents sur sa position." ;
+                message = auteur.getNom() + " a récupéré le butin :" + butinRecupere.getNom();
+                System.out.println(message);
+                return message;
             }
         }
         else{
-            System.out.println(((Bandit) auteur).getNom() + " n'a trouvé aucun butin à récupérer sur sa position.");
-            return null;
+            message = auteur.getNom() + " n'a trouvé aucun butin à récupérer sur sa position.";
+            return message;
         }
-        return null;
+        return message;
     }
 }
