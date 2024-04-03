@@ -6,14 +6,14 @@ public class Deplacer extends Action {
         super(p, d);
     }
 
-    //TODO : optimiser variable nouveauIndice
+    //TODO : optimiser variable nouvelIndice
 
     @Override
     public String executer() {
         Personne personne = getPersonne();
         Wagon wagonActuel = personne.getPosition();
         Train train = personne.getPosition().train;
-        int nouveauIndice;
+        int nouvelIndice;
 
         String description = null;
 
@@ -29,8 +29,8 @@ public class Deplacer extends Action {
             if (Math.random() <= Marshall.NERVOSITE_MARSHALL) {
                 Random r = new Random();
                 directionMarshall = Direction.values()[r.nextInt(2)];
-                nouveauIndice = (directionMarshall == Direction.ARRIERE) ? Math.max(0, wagonActuel.getNumero() - 1) : Math.min(wagonActuel.getNumero() + 1, train.getNombreW() - 1);
-                wagonActuel = train.getWagon(nouveauIndice);
+                nouvelIndice = (directionMarshall == Direction.ARRIERE) ? Math.max(0, wagonActuel.getNumero() - 1) : Math.min(wagonActuel.getNumero() + 1, train.getNombreW() - 1);
+                wagonActuel = train.getWagon(nouvelIndice);
                 personne.setPosition(wagonActuel);
                 description = personne.getNom() + " se déplace du wagon " + wagonActuel.getNumero() + " vers le wagon " + wagonActuel;
             }
@@ -39,8 +39,9 @@ public class Deplacer extends Action {
 
         if(personne instanceof Bandit) {
             if (direction == Direction.AVANT || direction == Direction.ARRIERE) {
-                nouveauIndice = (direction == Direction.ARRIERE) ? Math.max(0, wagonActuel.getNumero() - 1) : Math.min(wagonActuel.getNumero() + 1, train.getNombreW() - 1);
-                wagonActuel = train.getWagon(nouveauIndice);
+                // le code de la variable nouvelIndice est redondant, mais ça reste plus simple que de créer une lambda-expression qui prend en paramètre une direction (il faudrait créer une interface)
+                nouvelIndice = (direction == Direction.ARRIERE) ? Math.max(0, wagonActuel.getNumero() - 1) : Math.min(wagonActuel.getNumero() + 1, train.getNombreW() - 1);
+                wagonActuel = train.getWagon(nouvelIndice);
                 personne.setSurLeToit();
                 personne.setPosition(wagonActuel);
                 description = personne.getNom() + " se déplace du wagon " + wagonActuel.getNumero() + " vers le wagon " + wagonActuel;
