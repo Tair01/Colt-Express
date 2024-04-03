@@ -6,8 +6,6 @@ public class Deplacer extends Action {
         super(p, d);
     }
 
-    //TODO : optimiser variable nouvelIndice
-
     @Override
     public String executer() {
         Personne personne = getPersonne();
