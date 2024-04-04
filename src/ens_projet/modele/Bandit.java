@@ -29,4 +29,6 @@ public class Bandit extends Personne {
         System.out.println(this.getNom() + " a " + t  + "$");
         return t;
     }
+
+    public void ajouteBalle(){balles++;}
 }

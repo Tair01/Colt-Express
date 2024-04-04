@@ -44,7 +44,17 @@ public class BraquerTest {
     }
     @Test
     public void executer() {
-        // Le wagon a 3 butins
+
+        // Dans chaque Wagon il y a déjà 2 balles
+        assertEquals(2, wagon1.getBalles().size());
+        assertEquals(2, wagon2.getBalles().size());
+        assertEquals(2, wagon3.getBalles().size());
+        assertEquals(2, wagon4.getBalles().size());
+
+        // Chaque bandit a 6 balles au départ
+        assertEquals(6, bandit1.getBalles());
+
+        // Le wagon #1 a 3 butins
         wagon1.ajouterButin(butin1);
         wagon1.ajouterButin(butin2);
         wagon1.ajouterButin(butin3);
@@ -55,10 +65,15 @@ public class BraquerTest {
         ArrayList<Butin> butinsWagon1 = wagon1.getButins();
         ArrayList<Butin> butinsBandit1 = bandit1.getButins();
 
+
+
         assertEquals(2, butinsWagon1.size()); // Le butin a été retiré du wagon
         assertEquals(1, butinsBandit1.size()); // Le bandit a récupéré un butin
         assertTrue(butinsBandit1.contains(butin1) || butinsBandit1.contains(butin2) || butinsBandit1.contains(butin3)); // Le butin récupéré est bien celui du wagon1
         assertTrue(bandit1.montantT() > 0);
+
+        assertEquals(1, wagon1.ballesPresents().size()); // Une balle a été retirée du wagon
+        assertEquals(7,bandit1.getBalles()); // Le bandit a récupéré une balle
 
         // Le cas quand le wagon ne contient pas des butins
         Braquer braquer1 = new Braquer(bandit2, Direction.random());
@@ -68,5 +83,15 @@ public class BraquerTest {
         ArrayList<Butin> butinsBandit2 = bandit2.getButins();
 
         assertEquals(0,butinsBandit2.size());
+
+
+        assertEquals(1, wagon2.ballesPresents().size());
+        assertEquals(7,bandit2.getBalles());
+
+        Braquer braquer2 = new Braquer(bandit2, Direction.random());
+        braquer2.executer();
+
+        assertEquals(0, wagon2.ballesPresents().size());
+        assertEquals(8,  bandit2.getBalles());
     }
 }

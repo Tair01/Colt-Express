@@ -1,7 +1,7 @@
 package ens_projet.modele;
 
 public abstract class Personne {
-    static final int NB_BALLES = 6;
+    static int NB_BALLES = 6;
     protected Wagon position;
     Train train;
     private final String nom;

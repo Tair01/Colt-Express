@@ -13,7 +13,7 @@ public abstract class Action {
 
 }
 
-// TODO : ajouter des munitions dans les wagons -> 06/04
+// TODO : ajouter des munitions dans les wagons -> 06/04 ☑
 // TODO : modifier les classes pour MVC -> 07/04
 // TODO : coder la classe FenetreJeu -> 14/04
 // TODO : vérifier/améliorer les tests -> 15/04
