@@ -1,9 +1,11 @@
 package ens_projet.modele;
 
 public abstract class Action {
+    private final Modele modele;
     final Personne auteur;
     final Direction direction;
-    public Action(Personne a, Direction d){
+    public Action(Modele m,Personne a, Direction d){
+        modele = m;
         auteur = a;
         direction = d;
     }
@@ -20,4 +22,4 @@ public abstract class Action {
 // TODO : rajouter de la documentation et améliorer le code si possible (optimisation, suppression variables/méthodes inutilisées...etc.) -> 15/04
 // TODO : remplir fichier README -> 15/04
 
-// soutenance : 22/04
+// soutenance : 24/04

@@ -15,16 +15,18 @@ public class WagonTest {
     private HashSet<Personne> personnes;
     private Wagon wagon1, wagon2, wagon3, wagon4;
     private Butin butin1, butin2, butin3;
+    private Modele modele;
     @Before
     public void setUp() {
+        modele = new Modele();
         // Initialise le train avec la liste de personnes
-        train = new Train(4, personnes);
+        train = new Train(modele,4, personnes);
 
         // Crée les instances de ens_projet.modele.Bandit et ens_projet.modele.Marshall avec la liste de personnes
-        bandit1 = new Bandit("Alex", train);
-        bandit2 = new Bandit("Souleimane", train);
-        bandit3 = new Bandit("Tair", train);
-        marshall = new Marshall("Pierre", train);
+        bandit1 = new Bandit(modele,"Alex", train);
+        bandit2 = new Bandit(modele,"Souleimane", train);
+        bandit3 = new Bandit(modele,"Tair", train);
+        marshall = new Marshall(modele,"Pierre", train);
 
         personnes = new HashSet<>(Arrays.asList(bandit1, bandit2, bandit3, marshall));
         train.getPersonnes().addAll(personnes);
@@ -40,9 +42,9 @@ public class WagonTest {
         marshall.setPosition(wagon4);
 
 
-        butin1 = new Bourse(100, train.getWagon(0));
-        butin2 = new Bijou(train.getWagon(0));
-        butin3 = new Magot(train);
+        butin1 = new Bourse(modele,100, train.getWagon(0));
+        butin2 = new Bijou(modele, train.getWagon(0));
+        butin3 = new Magot(modele, train);
     }
     @Test
     public void getNumero() {

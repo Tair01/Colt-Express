@@ -12,19 +12,21 @@ public class BanditTest {
     private Butin butin1, butin2, butin3;
     private Train train;
     private HashSet<Personne> personnes;
+    private Modele modele;
     @Before
     public void setUp(){
-        train = new Train(4, personnes);
-        bandit1 = new Bandit("Alex", train);
-        bandit2 = new Bandit("Souleimane", train);
-        bandit3 = new Bandit("Tair", train);
+        modele = new Modele();
+        train = new Train(modele, 4, personnes); // Passer le modèle comme paramètre au train
+        bandit1 = new Bandit(modele,"Alex", train); // Passer le modèle comme paramètre au bandit
+        bandit2 = new Bandit(modele,"Souleimane",  train);
+        bandit3 = new Bandit(modele,"Tair",train);
 
         personnes = new HashSet<>(Arrays.asList(bandit1, bandit2, bandit3));
         train.getPersonnes().addAll(personnes);
 
-        butin1 = new Bourse(100, train.getWagon(2));
-        butin2 = new Bijou(train.getWagon(0));
-        butin3 = new Magot(train);
+        butin1 = new Bourse(modele, 100, train.getWagon(2));
+        butin2 = new Bijou(modele,train.getWagon(0));
+        butin3 = new Magot(modele,train);
     }
 
     @Test
@@ -80,7 +82,7 @@ public class BanditTest {
 
     @Test
     public void montantT() {
-        Bijou bijou1 = new Bijou(train.getWagon(2));
+        Bijou bijou1 = new Bijou(modele,train.getWagon(2));
         bandit1.ajouteButin(butin1);
         bandit1.ajouteButin(butin2);
         bandit1.ajouteButin(butin3);

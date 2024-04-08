@@ -1,15 +1,19 @@
 package ens_projet.modele;
 
 public abstract class Personne {
+    private final Modele modele;
     static int NB_BALLES = 6;
+    static int NB_ACTIONS = 4;
     protected Wagon position;
     Train train;
     private final String nom;
     private boolean surLeToit;
     int balles;
-    public Personne(String n, boolean s, Train t){
+    int actions;
+    public Personne(Modele m, String n, boolean s, Train t){
         // vérification de l'absence du nom choisi dans le train en question
         if(!(checkNomDejaUtilise(t, n))) {
+            modele = m;
             nom = n;
             surLeToit = s;
             this.train = t;
@@ -36,6 +40,7 @@ public abstract class Personne {
     public void tire(){
         if(balles > 0) balles--;
     }
+    public void utiliseAction(){if(actions > 0) actions--;}
     public boolean isSurLeToit() { return surLeToit; }
     public void setSurLeToit(){surLeToit = !(surLeToit);}
     void effectuerAction(Action a){

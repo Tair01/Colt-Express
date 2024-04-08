@@ -8,19 +8,21 @@ import ens_projet.modele.Train;
 import java.util.ArrayList;
 
 public class Wagon {
+    private final Modele modele;
     private final int numWag;
     protected final Train train;
     private ArrayList<Butin> butins;
     private ArrayList<Balle> balles;
 
-    public Wagon(int n, Train t) {
+    public Wagon(Modele m, int n, Train t) {
+        modele = m;
         numWag = n;
         train = t;
         butins = new ArrayList<>();
         balles = new ArrayList<>();
 
         for(int i = 0; i < 2; i++){
-            balles.add(new Balle(this));
+            balles.add(new Balle(m,this));
         }
     }
 

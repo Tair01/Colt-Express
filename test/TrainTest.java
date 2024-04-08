@@ -1,3 +1,4 @@
+import ens_projet.modele.Modele;
 import ens_projet.modele.Personne;
 import ens_projet.modele.Train;
 import org.junit.Before;
@@ -9,10 +10,12 @@ import static org.junit.Assert.*;
 
 public class TrainTest {
     private Train train;
+    private Modele modele;
 
     @Before
     public void setUp(){
-        train = new Train(4, new HashSet<Personne>());
+        modele = new Modele();
+        train = new Train(modele, 4, new HashSet<Personne>());
     }
     @Test
     public void getWagons() {

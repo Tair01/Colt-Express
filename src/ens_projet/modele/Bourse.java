@@ -1,7 +1,7 @@
 package ens_projet.modele;
 
 public class Bourse extends Butin {
-    public Bourse(int valeur, Wagon position){
-        super(valeur, position);
+    public Bourse(Modele m,int valeur, Wagon position){
+        super(m,valeur, position);
     }
 }

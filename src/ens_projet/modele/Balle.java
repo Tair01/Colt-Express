@@ -2,8 +2,8 @@ package ens_projet.modele;
 
 public class Balle  extends Butin{
     private static  final int PUISSANCE  = 1;
-    public Balle(Wagon p){
-        super(0, p);
+    public Balle(Modele m,Wagon p){
+        super(m,0, p);
     }
 
     public static int getPUISSANCE() {

@@ -6,12 +6,12 @@ import java.util.Objects;
 
 public class Bandit extends Personne {
     private ArrayList<Butin> butins;
-
-    public Bandit(String s, Train t) {
-        super(s, true, t);
+    public Bandit(Modele m,String s, Train t) {
+        super(m,s, true, t);
         position = t.getWagon(0);
         butins = new ArrayList<>();
         balles = Personne.NB_BALLES;
+        actions = Personne.NB_ACTIONS;
     }
     public ArrayList<Butin> getButins(){return butins;}
     public void ajouteButin(Butin b){butins.add(b); }

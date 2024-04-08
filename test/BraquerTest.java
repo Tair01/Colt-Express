@@ -16,14 +16,16 @@ public class BraquerTest {
     private Wagon wagon1, wagon2, wagon3, wagon4;
     private HashSet<Personne> personnes;
     private Butin butin1, butin2, butin3;
+    private Modele modele;
     @Before
     public void setUp(){
-        train = new Train(4, personnes);
+        modele = new Modele();
+        train = new Train(modele,4, personnes);
         // Crée les instances de ens_projet.modele.Bandit et ens_projet.modele.Marshall avec la liste de personnes
-        bandit1 = new Bandit("Alex", train);
-        bandit2 = new Bandit("Souleimane", train);
-        bandit3 = new Bandit("Tair", train);
-        marshall = new Marshall("Pierre", train);
+        bandit1 = new Bandit(modele,"Alex", train);
+        bandit2 = new Bandit(modele,"Souleimane", train);
+        bandit3 = new Bandit(modele,"Tair", train);
+        marshall = new Marshall(modele,"Pierre", train);
 
         personnes = new HashSet<>(Arrays.asList(bandit1, bandit2, bandit3, marshall));
         train.getPersonnes().addAll(personnes);
@@ -38,9 +40,9 @@ public class BraquerTest {
         bandit3.setPosition(wagon3);
         marshall.setPosition(wagon4);
 
-        butin1 = new Bourse(100, train.getWagon(0));
-        butin2 = new Bijou(train.getWagon(0));
-        butin3 = new Magot(train);
+        butin1 = new Bourse(modele,100, train.getWagon(0));
+        butin2 = new Bijou(modele,train.getWagon(0));
+        butin3 = new Magot(modele,train);
     }
     @Test
     public void executer() {
@@ -59,7 +61,7 @@ public class BraquerTest {
         wagon1.ajouterButin(butin2);
         wagon1.ajouterButin(butin3);
 
-        Braquer braquer = new Braquer(bandit1, Direction.random()); // Quand la ens_projet.modele.Direction.random(), alors la dir est pas importante
+        Braquer braquer = new Braquer(modele,bandit1, Direction.random()); // Quand la ens_projet.modele.Direction.random(), alors la dir est pas importante
         braquer.executer();
 
         ArrayList<Butin> butinsWagon1 = wagon1.getButins();
@@ -76,7 +78,7 @@ public class BraquerTest {
         assertEquals(7,bandit1.getBalles()); // Le bandit a récupéré une balle
 
         // Le cas quand le wagon ne contient pas des butins
-        Braquer braquer1 = new Braquer(bandit2, Direction.random());
+        Braquer braquer1 = new Braquer(modele,bandit2, Direction.random());
         braquer1.executer();
 
         ArrayList<Butin> butinsWagon2 = wagon2.getButins();
@@ -88,7 +90,7 @@ public class BraquerTest {
         assertEquals(1, wagon2.ballesPresents().size());
         assertEquals(7,bandit2.getBalles());
 
-        Braquer braquer2 = new Braquer(bandit2, Direction.random());
+        Braquer braquer2 = new Braquer(modele,bandit2, Direction.random());
         braquer2.executer();
 
         assertEquals(0, wagon2.ballesPresents().size());

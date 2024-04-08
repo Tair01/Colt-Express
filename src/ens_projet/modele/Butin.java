@@ -3,13 +3,15 @@ package ens_projet.modele;
 import ens_projet.modele.Bandit;
 
 public abstract class Butin {
+    private final Modele modele;
     private final int valeur;
     private Bandit possesseur;
     Wagon position;
     private boolean isRamasse;
     private String nom;
 
-    public Butin(int v, Wagon p){
+    public Butin(Modele m, int v, Wagon p){
+        modele = m;
         valeur = v;
         position = p;
         possesseur = null;

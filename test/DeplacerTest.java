@@ -13,13 +13,15 @@ public class DeplacerTest {
     private Marshall marshall;
     private Wagon wagon1, wagon2, wagon3, wagon4;
     private HashSet<Personne> personnes;
+    private Modele modele;
     @Before
     public void setUp(){
-        train = new Train(4, personnes);
-        bandit1 = new Bandit("Alex", train);
-        bandit2 = new Bandit("Souleimane", train);
-        bandit3 = new Bandit("Tair", train);
-        marshall = new Marshall("Pierre", train);
+        modele = new Modele();
+        train = new Train(modele,4, personnes);
+        bandit1 = new Bandit(modele,"Alex", train);
+        bandit2 = new Bandit(modele,"Souleimane", train);
+        bandit3 = new Bandit(modele,"Tair", train);
+        marshall = new Marshall(modele,"Pierre", train);
 
         personnes = new HashSet<>(Arrays.asList(bandit1, bandit2, bandit3, marshall));
         train.getPersonnes().addAll(personnes);
@@ -41,29 +43,29 @@ public class DeplacerTest {
         assertEquals(2, bandit3.getPosition().getNumero());
 
         // Deplacement ver l'Avant
-        Action action = new Deplacer(bandit1, Direction.AVANT);
+        Action action = new Deplacer(modele,bandit1, Direction.AVANT);
         action.executer();
         assertEquals(wagon2, bandit1.getPosition());
 
         //Deplacement vers l'Arriere
-        Action action1 = new Deplacer(bandit3, Direction.ARRIERE);
+        Action action1 = new Deplacer(modele,bandit3, Direction.ARRIERE);
         action1.executer();
         assertEquals(wagon2, bandit3.getPosition());
 
         //Deplacement vers le Bas
-        Action action2 = new Deplacer(bandit2, Direction.BAS);
+        Action action2 = new Deplacer(modele,bandit2, Direction.BAS);
         action2.executer();
         assertFalse(bandit2.isSurLeToit());
 
         //Deplacement vers le Haut
-        Action action3 = new Deplacer(bandit2, Direction.HAUT);
+        Action action3 = new Deplacer(modele,bandit2, Direction.HAUT);
         action3.executer();
         assertTrue(bandit2.isSurLeToit());
     }
     @Test
     public void testMarshallMovesBeforeBanditActions() {
         // Initialisation du jeu avec un ens_projet.modele.Marshall et des bandits
-        Action action = new Deplacer(marshall, Direction.AVANT);
+        Action action = new Deplacer(modele, marshall, Direction.AVANT);
         // Vérifiez les positions initiales des bandits
         assertEquals(0, bandit1.getPosition().getNumero());
         assertEquals(1, bandit2.getPosition().getNumero());
@@ -75,27 +77,27 @@ public class DeplacerTest {
             action.executer();
 
             // ens_projet.modele.Action de bandit
-            Deplacer deplacer1 = new Deplacer(bandit1, Direction.AVANT);
+            Deplacer deplacer1 = new Deplacer(modele, bandit1, Direction.AVANT);
             deplacer1.executer();
 
             // Vérifiez la nouvelle position de bandit1
             assertEquals(wagon2, bandit1.getPosition());
 
             // ens_projet.modele.Action de bandit
-            Deplacer deplacer2 = new Deplacer(bandit3, Direction.ARRIERE);
+            Deplacer deplacer2 = new Deplacer(modele, bandit3, Direction.ARRIERE);
             deplacer2.executer();
 
             // Vérifiez la nouvelle position de bandit3
             assertEquals(wagon2, bandit3.getPosition());
 
             // ens_projet.modele.Action de bandit
-            Deplacer deplcaer3 = new Deplacer(bandit2, Direction.BAS);
+            Deplacer deplcaer3 = new Deplacer(modele,bandit2, Direction.BAS);
             deplcaer3.executer();
             // Vérifiez l'état de bandit2
             assertFalse(bandit2.isSurLeToit());
 
             // ens_projet.modele.Action de bandit
-            Deplacer deplacer4 = new Deplacer(bandit2, Direction.HAUT);
+            Deplacer deplacer4 = new Deplacer(modele,bandit2, Direction.HAUT);
             deplacer4.executer();
             // Vérifiez l'état de bandit2
             assertTrue(bandit2.isSurLeToit());
