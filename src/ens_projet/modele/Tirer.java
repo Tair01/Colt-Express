@@ -14,7 +14,7 @@ public class Tirer extends Action {
     }
     @Override
     public String executer() {
-        if (auteur.actions > 0) {
+        if (auteur.getNbActions() > 0) {
             if (auteur.getBalles() > 0) {
                 if (auteur instanceof Bandit) {
                     Random random = new Random();

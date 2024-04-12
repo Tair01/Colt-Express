@@ -15,12 +15,9 @@ public class Train {
         modele = m;
         NB_WAGONS = n;
         wagons = new ArrayList<>();
-        // on ajoute NB_WAGONS - 1 wagons au train
-        for (int i = 1; i < NB_WAGONS; i++) {
+        for (int i = 0; i < NB_WAGONS; i++) {
             wagons.add(new Wagon(m,i - 1, this));
         }
-        // dernier wagon : c'est une locomotive
-        wagons.add(new Wagon(m,NB_WAGONS - 1, this));
         this.personnes = personnes != null ? personnes : new HashSet<>();
     }
 

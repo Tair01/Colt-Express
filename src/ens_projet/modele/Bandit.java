@@ -30,5 +30,7 @@ public class Bandit extends Personne {
         return t;
     }
 
-    public void ajouteBalle(){balles++;}
+    public void ajouteMunitions(CaisseMunitions c){
+        balles += c.getNbMunitions();
+    }
 }

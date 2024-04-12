@@ -2,7 +2,7 @@ package ens_projet.modele;
 
 public abstract class Personne {
     private final Modele modele;
-    static int NB_BALLES = 6;
+    final static int NB_BALLES = 6;
     static int NB_ACTIONS = 4;
     protected Wagon position;
     Train train;
@@ -41,6 +41,9 @@ public abstract class Personne {
         if(balles > 0) balles--;
     }
     public void utiliseAction(){if(actions > 0) actions--;}
+
+    public int getNbActions(){ return actions;}
+
     public boolean isSurLeToit() { return surLeToit; }
     public void setSurLeToit(){surLeToit = !(surLeToit);}
     void effectuerAction(Action a){

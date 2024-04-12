@@ -1,7 +1,5 @@
 package ens_projet.modele;
 
-import ens_projet.modele.Bandit;
-
 public abstract class Butin {
     private final Modele modele;
     private final int valeur;
