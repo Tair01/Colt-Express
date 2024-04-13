@@ -1,10 +1,5 @@
 package ens_projet.modele;
 
-import ens_projet.modele.Action;
-import ens_projet.modele.Bandit;
-import ens_projet.modele.Direction;
-import ens_projet.modele.Personne;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -48,7 +43,7 @@ public class Tirer extends Action {
                     chosenBandit.lacheButin();
                     auteur.tire();
                     auteur.utiliseAction();
-                    return auteur.getNom() + " a tiré sur " + chosenBandit.getNom() + ".";
+                    return auteur.toString() + " a tiré sur " + chosenBandit.toString() + ".";
                 } else {
                     ArrayList<Bandit> banditsWagon = auteur.getPosition().banditsPresents();
                     int i = 0;
@@ -61,9 +56,9 @@ public class Tirer extends Action {
                         banditsTouches.add(banditsWagon.get(i));
                         i++;
                     }
-                    String s = auteur.getNom() + " a tiré sur : ";
+                    String s = auteur.toString() + " a tiré sur : ";
                     for (Bandit b : banditsTouches) {
-                        s += (b.getNom() + " ");
+                        s += (b.toString() + " ");
                         b.setSurLeToit();
                     }
                     return s;

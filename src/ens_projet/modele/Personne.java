@@ -1,5 +1,7 @@
 package ens_projet.modele;
 
+import java.util.Objects;
+
 public abstract class Personne {
     private final Modele modele;
     final static int NB_BALLES = 6;
@@ -24,7 +26,7 @@ public abstract class Personne {
     // Cela poserait des problèmes d'unicité
     private static boolean checkNomDejaUtilise(Train t, String nom){
         for(Personne p : t.getPersonnes()){
-            if(p.getNom() == nom) return true;
+            if(Objects.equals(p.toString(), nom)) return true;
         }
         return false;
     }
@@ -47,9 +49,11 @@ public abstract class Personne {
     public boolean isSurLeToit() { return surLeToit; }
     public void setSurLeToit(){surLeToit = !(surLeToit);}
     void effectuerAction(Action a){
-        if(a.getPersonne().getNom().equals(getNom())) a.executer();
+        if(a.getPersonne().toString().equals(toString())) a.executer();
     }
-    public String getNom(){
+
+    @Override
+    public String toString(){
         return nom;
     }
 }

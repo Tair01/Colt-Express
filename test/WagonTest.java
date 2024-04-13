@@ -118,7 +118,7 @@ public class WagonTest {
     public void butinsPresents(){
         wagon1.ajouterButin(butin1);
         wagon1.ajouterButin(butin2);
-        assertEquals(2, wagon1.butinsPresents().size());
+        assertEquals(2, wagon1.getButins().size());
     }
 
     @Test

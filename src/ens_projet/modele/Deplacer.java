@@ -30,7 +30,7 @@ public class Deplacer extends Action {
                 nouvelIndice = (directionMarshall == Direction.ARRIERE) ? Math.max(0, wagonActuel.getNumero() - 1) : Math.min(wagonActuel.getNumero() + 1, train.getNombreW() - 1);
                 wagonActuel = train.getWagon(nouvelIndice);
                 personne.setPosition(wagonActuel);
-                description = personne.getNom() + " se déplace du wagon " + wagonActuel.getNumero() + " vers le wagon " + wagonActuel;
+                description = personne.toString() + " se déplace du wagon " + wagonActuel.getNumero() + " vers le wagon " + wagonActuel;
             }
         }
 
@@ -42,11 +42,11 @@ public class Deplacer extends Action {
                 personne.setSurLeToit();
                 personne.setPosition(wagonActuel);
                 personne.utiliseAction();
-                description = personne.getNom() + " se déplace du wagon " + wagonActuel.getNumero() + " vers le wagon " + wagonActuel;
+                description = personne.toString() + " se déplace du wagon " + wagonActuel.getNumero() + " vers le wagon " + wagonActuel;
             } else if (direction == Direction.BAS || direction == Direction.HAUT) {
                 personne.setSurLeToit();
                 personne.utiliseAction();
-                description = (direction == Direction.BAS) ? (personne.getNom() + " est descendu.") : (personne.getNom() + " est monté.");
+                description = (direction == Direction.BAS) ? (personne.toString() + " est descendu.") : (personne.toString() + " est monté.");
             }
         }
         // si l'auteur du déplacement et/ou la direction n'ont pas permis l'exécution du déplacement, description sera égal à null à ce stade (il faudra donc vérifier à chaque fois que le déplacement d'un personnage n'est pas null)

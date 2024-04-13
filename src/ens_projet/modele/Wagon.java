@@ -36,6 +36,14 @@ public class Wagon {
         return bandits;
     }
 
+    public ArrayList<Personne> getPersonnesW(){
+        ArrayList<Personne> personnes = new ArrayList<>();
+        for(Personne p : train.getPersonnes()){
+            if(this.getNumero() == p.getPosition().getNumero()) personnes.add(p);
+        }
+        return personnes;
+    }
+
     public void ajouterButin(Butin b){
         butins.add(b);
     }

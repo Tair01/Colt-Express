@@ -5,7 +5,7 @@ public abstract class Butin {
     private final int valeur;
     private Bandit possesseur;
     Wagon position;
-    private boolean isRamasse;
+    private boolean isRamasse, surLeToit;
     private String nom;
 
     public Butin(Modele m, int v, Wagon p){
@@ -13,13 +13,19 @@ public abstract class Butin {
         valeur = v;
         position = p;
         possesseur = null;
+        surLeToit = false;
     }
     public int getValeur() {return valeur;}
 
-    public String getNom() {
+    @Override
+    public String toString() {
         if(this instanceof Bijou) return "bijou (500$)";
         else if (this instanceof Magot) return "magot (1000$)";
         else return "bourse (" + valeur + "$)";
+    }
+
+    public boolean isSurLeToit() {
+        return surLeToit;
     }
 
     /*public ens_projet.modele.Wagon getPositionButin() {return positionButin;}

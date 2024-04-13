@@ -16,9 +16,11 @@ public abstract class Action {
 }
 
 // TODO : ajouter des munitions dans les wagons -> 06/04 ☑
-// TODO : modifier les classes pour MVC -> 07/04
-// TODO : coder la classe FenetreJeu -> 14/04
-// TODO : vérifier/améliorer les tests -> 15/04
+// TODO : modifier les classes pour MVC -> 07/04 ☑
+// TODO : coder les vues du jeu -> 14/04
+// TODO : corriger tous les endroits où la vérification de la présence du butin sur le toit ou à l'intérieur est nécessaire -> 14/04
+// TODO : coder la logique du jeu -> 14/04
+// TODO : vérifier/améliorer les tests -> 14/04
 // TODO : rajouter de la documentation et améliorer le code si possible (optimisation, suppression variables/méthodes inutilisées...etc.) -> 15/04
 // TODO : remplir fichier README -> 15/04
 

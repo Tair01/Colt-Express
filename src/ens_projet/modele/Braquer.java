@@ -1,8 +1,5 @@
 package ens_projet.modele;
 
-import ens_projet.modele.Action;
-import ens_projet.modele.Bandit;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -23,14 +20,14 @@ public class Braquer extends Action {
                 ((Bandit) auteur).ajouteButin(butinRecupere);
                 auteur.getPosition().retireButin(butinRecupere);
                 auteur.utiliseAction();
-                message += auteur.getNom() + " a récupéré le butin :" + butinRecupere.getNom() + "\n";
+                message += auteur.toString() + " a récupéré le butin :" + butinRecupere.toString() + "\n";
                 System.out.println(message);
             }
             if (!caissesW.isEmpty()) {
                 CaisseMunitions caisseRamassee = caissesW.get(random.nextInt(caissesW.size()));
                 ((Bandit) auteur).ajouteMunitions(caisseRamassee);
                 auteur.getPosition().retireButin(caisseRamassee);
-                message += auteur.getNom() + " a ramassé une caisse de munitions." + "\n";
+                message += auteur.toString() + " a ramassé une caisse de munitions." + "\n";
             }
         }
         return message;

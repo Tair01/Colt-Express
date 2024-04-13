@@ -1,8 +1,6 @@
 package ens_projet.modele;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Objects;
 
 public class Bandit extends Personne {
     private ArrayList<Butin> butins;
@@ -26,7 +24,7 @@ public class Bandit extends Personne {
         for(Butin b: butins){
             t+=b.getValeur();
         }
-        System.out.println(this.getNom() + " a " + t  + "$");
+        System.out.println(this.toString() + " a " + t  + "$");
         return t;
     }
 

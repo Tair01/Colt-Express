@@ -2,16 +2,13 @@ package ens_projet.modele;
 
 import ens_projet.vue.Observable;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
-import java.util.Random;
-import java.util.Scanner;
-
+// TODO : corriger 2 bugs : génération de bourses aléatoires dans génère des bourses vides (0$) et magot inexistant (dans l'affichage de VueTrain en tout cas)
 
 public class Modele extends Observable {
     private final int NB_WAGONS = 5;
-    private final int NB_BANDITS = 2;
+    private final int NB_BANDITS = 10;
     private final HashSet<Personne> personnes = new HashSet<>();
     private final Train t;
 
@@ -19,15 +16,32 @@ public class Modele extends Observable {
     public Modele(){
         t = new Train(this,NB_WAGONS, personnes);
     }
-    public void initialiseBandits(){
-        Random r = new Random();
+    public void initialisePersonnes() {
         Scanner scanner = new Scanner(System.in);
-        for(int i = 0; i < NB_BANDITS; i++){
-            System.out.println("Entrez le nom du bandit n°" + i);
-            personnes.add(new Bandit(this,scanner.nextLine(), t));
+        String nomBandit;
+        for (int i = 0; i < NB_BANDITS; i++) {
+            /*System.out.println("Entrez le nom du bandit n°" + (i + 1) + ":");
+            nomBandit = scanner.nextLine().trim();
+            while (nomBandit.isEmpty()) {
+                System.out.println("Merci d'entrer un nom non vide et qui n'a pas déjà été utilisé.");
+                nomBandit = scanner.nextLine().trim();*/
+            nomBandit = "Bandit" +i;
+            personnes.add(new Bandit(this, nomBandit, t));
         }
-        personnes.add(new Marshall(this,"Marshall", t));
+
+        for(int k = 0; k < 8 ; k++)
+            personnes.add(new Marshall(this, "Marshall" + (k+1), t));
     }
+
+    /*private boolean nomExisteDeja(String nom) {
+        for (Personne p : personnes) {
+            if (p.toString().equals(nom)) {
+                return true;
+            }
+        }
+        return false;
+    }*/
+
     public void initialiseWagons(){
         Random r = new Random();
         // dans chaque wagon...
@@ -48,8 +62,8 @@ public class Modele extends Observable {
         }
         new Magot(this,t); // il sera placé automatiquement selon la logique de code
     }
-    public void initialiseTrain(){
-        initialiseBandits();
+    public void initialise(){
+        initialisePersonnes();
         initialiseWagons();
     }
 
@@ -58,7 +72,7 @@ public class Modele extends Observable {
             if(p instanceof Bandit) {
                 // la partie se termine si l'un des bandits présents a accumulé au moins 5000$ de butin
                 if(((Bandit) p).montantT() >= 5000) {
-                    System.out.println("Partie finie, joueur gagnant : " + p.getNom());
+                    System.out.println("Partie finie, joueur gagnant : " + p.toString());
                     // f.finalScreen();
                     return true;
                 }
@@ -76,10 +90,14 @@ public class Modele extends Observable {
         return bandits;
     }
 
+    public Train getTrain() {
+        return t;
+    }
+
     public static void main(String[] args){
         // f = new FenetreJeu();
         Modele j = new Modele();
-        j.initialiseTrain();
+        j.initialise();
         ArrayList<Bandit> bandits = j.getBandits();
         while (!j.partieFinie()){
             for(Bandit b: bandits){
