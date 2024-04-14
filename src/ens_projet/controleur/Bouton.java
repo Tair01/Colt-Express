@@ -1,12 +1,12 @@
 package ens_projet.controleur;
 
 import javax.swing.*;
+import java.awt.*;
 
-public abstract class Bouton extends JButton {
+public class Bouton extends JButton {
     public Bouton(String t, int a, int b, int da, int db){
         setText(t);
-        setLocation(a,b);
-        setSize(da,db);
+        setBounds(a,b,da,db);
         setFocusable(false);
     }
 }

@@ -44,6 +44,16 @@ public class VueTrain extends JPanel implements Observer {
             g.drawString("Intérieur", X + 5,(hauteurWagon + padding)/2 + 15);
             g.drawString("Toit", X + 5,padding + 15);
 
+            String texteWagon;
+            if (i == train.getNombreW() - 1) {
+                texteWagon = "Locomotive";
+            } else {
+                texteWagon = "Wagon " + (i + 1); // Ajoutez 1 car les indices commencent à 0
+            }
+            g.setFont(fTitres.deriveFont(Font.BOLD));
+            g.drawString(texteWagon, X + largeurWagon / 2 - g.getFontMetrics().stringWidth(texteWagon) / 2, padding - 5);
+
+
             g.setFont(fPersonnesButins);
 
             int offset = 3;
