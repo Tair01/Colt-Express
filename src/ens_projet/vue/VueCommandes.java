@@ -1,31 +1,77 @@
 package ens_projet.vue;
-
 import ens_projet.controleur.Bouton;
+import ens_projet.modele.Bandit;
 import ens_projet.modele.Modele;
-
 import javax.swing.*;
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 public class VueCommandes extends JPanel implements Observer {
     private Modele m;
     private Bouton[] banditDeplacer;
     private Bouton banditBraquer, banditTirer;
-
+    private JTextField textField;
+    private JLabel banditChoisi, nbActionDeBanditCh;
     public VueCommandes(Modele m){
         this.m = m;
         m.addObserver(this);
         setPreferredSize(new Dimension(1000, 200));
+        setLayout(null);
         initBoutons();
+        initTextField();
+        initLabel();
+
+        Bandit banditChoisi = m.getTrain().getBanditChoisi();
+        if (banditChoisi != null) {
+            banditChoisi.addObserver(() -> {
+                changementNbActionsBanditChoisi(banditChoisi.getNbActions());
+            });
+        }
+    }
+    public void initTextField() {
+        textField = new JTextField();
+        textField.setBounds(10, 10, 150, 30);
+        textField.setPreferredSize(new Dimension(150,30));
+        textField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nomBandit = textField.getText();
+                Bandit bandit = m.getTrain().choisirPersonne(nomBandit);
+                if(bandit != null){
+                    banditChoisi.setText("Bandit choisi: " + nomBandit);
+                    nbActionDeBanditCh.setText("Nombre d'actions : " + bandit.getNbActions());
+                    if(bandit.getNbActions() == 0){
+                        JOptionPane.showMessageDialog(VueCommandes.this, "Veuillez choisir un autre Bandit!", "Information", JOptionPane.INFORMATION_MESSAGE);
+                        banditChoisi.setText("Entrez le nom d'un nouveau Bandit");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(VueCommandes.this, "Aucun bandit trouvé avec ce nom", "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        });
+        add(textField);
     }
 
+    public void initLabel() {
+        banditChoisi = new JLabel("Bandit choisi: ");
+        banditChoisi.setBounds(10, 40, 150, 30);
+        nbActionDeBanditCh = new JLabel("Nombre d'actions : ");
+        nbActionDeBanditCh.setBounds(10, 60,150,30);
+        add(banditChoisi);
+        add(nbActionDeBanditCh);
+    }
+    public void changementNbActionsBanditChoisi(int nbActions) {
+        nbActionDeBanditCh.setText("Nombre d'actions : " + nbActions);
+    }
     public void initBoutons(){
-        setLayout(null);
+        //setLayout(null);
         int largeurBouton = 50;
         int hauteurBouton = 50;
 
         // Positions et dimensions des boutons de déplacement
         banditDeplacer = new Bouton[4];
-        banditDeplacer[0] = new Bouton("→", 570, 80, largeurBouton, hauteurBouton);
+        banditDeplacer[0] = new Bouton("→", 580, 80, largeurBouton, hauteurBouton);
         banditDeplacer[1] = new Bouton("←", 420, 80, largeurBouton, hauteurBouton);
         banditDeplacer[2] = new Bouton("↓", 500, 150, largeurBouton, hauteurBouton);
         banditDeplacer[3] = new Bouton("↑", 500, 10, largeurBouton, hauteurBouton);
@@ -39,29 +85,24 @@ public class VueCommandes extends JPanel implements Observer {
         }
 
         // Position et dimension des boutons "Braquer" et "Tirer"
-        banditBraquer = new Bouton("Braquer", 700, 50, largeurBouton * 2, hauteurBouton);
-        banditTirer = new Bouton("Tirer", 700, 120, largeurBouton * 2, hauteurBouton);
+        banditBraquer = new Bouton("Braquer", 700, 10, largeurBouton * 2, hauteurBouton);
+        banditTirer = new Bouton("Tirer", 700, 70, largeurBouton * 2, hauteurBouton);
 
         this.add(banditBraquer);
         this.add(banditTirer);
     }
-
     @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        for(Bouton b: banditDeplacer) b.paintComponents(g);
-        banditBraquer.paintComponents(g);
-        banditTirer.paintComponents(g);
-        g.setColor(Color.BLACK);
-        g.setFont(new Font("Arial", Font.BOLD, 16));
-        //g.drawString("Actions restantes:" + m.getNbActions(),10, getHeight() - 10);
-    }
-
+    public void paintComponent(Graphics g){super.paintComponent(g);}
     @Override
-    public void update(){
-        this.repaint();
-    }
+    public void update(){this.repaint();}
     public Bouton[] getBanditDeplacer() {
         return banditDeplacer;
     }
+    public Bouton getBanditBraquer() {
+        return banditBraquer;
+    }
+    public Bouton getBanditTirer() {
+        return banditTirer;
+    }
+    public JTextField getTextField(){return textField;}
 }

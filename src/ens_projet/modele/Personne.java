@@ -1,8 +1,10 @@
 package ens_projet.modele;
 
+import ens_projet.vue.Observable;
+
 import java.util.Objects;
 
-public abstract class Personne {
+public abstract class Personne extends Observable {
     private final Modele modele;
     final static int NB_BALLES = 6;
     static int NB_ACTIONS = 4;
@@ -33,9 +35,7 @@ public abstract class Personne {
     public Wagon getPosition(){
         return position;
     }
-
     public void setPosition(Wagon w){ position =  w;}
-
     public int getBalles() {
         return balles;
     }
@@ -43,17 +43,17 @@ public abstract class Personne {
         if(balles > 0) balles--;
     }
     public void utiliseAction(){if(actions > 0) actions--;}
-
     public int getNbActions(){ return actions;}
-
     public boolean isSurLeToit() { return surLeToit; }
     public void setSurLeToit(){surLeToit = !(surLeToit);}
     void effectuerAction(Action a){
         if(a.getPersonne().toString().equals(toString())) a.executer();
     }
-
     @Override
     public String toString(){
         return nom;
+    }
+    public void notifyActionsChanged() {
+        notifyObservers();
     }
 }

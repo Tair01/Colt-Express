@@ -13,10 +13,14 @@ public class ControleurBandit implements MouseListener, KeyListener {
     private final Modele modele;
     private final VueTrain vueTrain;
     private final VueCommandes vueCommandes;
+    private Bandit banditChoisi;
     public ControleurBandit(Modele m, VueTrain vT, VueCommandes vC){
         modele = m;
         vueTrain = vT;
         vueCommandes = vC;
+    }
+    public void setBanditChoisi(Bandit b){
+        banditChoisi = b;
     }
     @Override
     public void keyTyped(KeyEvent e) {}
@@ -28,32 +32,40 @@ public class ControleurBandit implements MouseListener, KeyListener {
     public void mouseClicked(MouseEvent e) {
         int mouseX = e.getX();
         int mouseY = e.getY();
-        // Faut changer, ca doit etre un bandit choisi il doit avoir des conditions pour le nb actions et ect..
-        Bandit bandit = modele.getBandits().get(0);
-        Action action;
+        String nom = vueCommandes.getTextField().getText();
+        banditChoisi = modele.getTrain().choisirPersonne(nom);
+
+        if(banditChoisi == null){
+            System.out.println("Aucun Bandit choisi");
+            return;
+        }
+        Action action = null;
 
         for(Bouton b: vueCommandes.getBanditDeplacer()){
             if(b.contains(mouseX, mouseY)){
                 if(b.getText().equals("→")){
-                    action = new Deplacer(modele, bandit, Direction.AVANT);
+                    action = new Deplacer(modele, banditChoisi, Direction.AVANT);
                     action.executer();
                 }if(b.getText().equals("←")){
-                    action = new Deplacer(modele, bandit, Direction.ARRIERE);
+                    action = new Deplacer(modele, banditChoisi, Direction.ARRIERE);
                     action.executer();
                 }if(b.getText().equals("↓")){
-                    action = new Deplacer(modele,bandit, Direction.BAS);
+                    action = new Deplacer(modele,banditChoisi, Direction.BAS);
                     action.executer();
                 }if(b.getText().equals("↑")){
-                    action = new Deplacer(modele,bandit, Direction.HAUT);
-                    action.executer();
-                }if(b.getText().equals("Braquer")){
-                    action = new Braquer(modele, bandit, Direction.random());
-                    action.executer();
-                }if(b.getText().equals("Tirer")){
-                    action = new Tirer(modele, bandit, Direction.random());
+                    action = new Deplacer(modele,banditChoisi, Direction.HAUT);
                     action.executer();
                 }
             }
+        }
+        String clickedButtonText = ((Bouton) e.getSource()).getText();
+        if (clickedButtonText.equals("Braquer")) {
+            action = new Braquer(modele, banditChoisi, Direction.random());
+        } else if (clickedButtonText.equals("Tirer")) {
+            action = new Tirer(modele, banditChoisi, Direction.random());
+        }
+        if (action != null) {
+            action.executer();
         }
     }
     @Override
@@ -64,4 +76,7 @@ public class ControleurBandit implements MouseListener, KeyListener {
     public void mouseEntered(MouseEvent e) {}
     @Override
     public void mouseExited(MouseEvent e) {}
+    public void updateBanditChoisi(String newText) {
+        banditChoisi = modele.getTrain().choisirPersonne(newText);
+    }
 }
