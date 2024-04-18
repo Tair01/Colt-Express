@@ -11,7 +11,9 @@ public class Deplacer extends Action {
         Personne personne = getPersonne();
         Wagon wagonActuel = personne.getPosition();
         Train train = personne.getPosition().train;
-        int nouvelIndice;
+        Wagon wagonActuelM = train.getMarshall().getPosition();
+        Marshall marshall = train.getMarshall();
+        int nouvelIndice, nouvelIndiceM;
         String description = null;
 
         // CAS GÉNÉRAL : vérification des conditions triviales de déplacement
@@ -22,16 +24,14 @@ public class Deplacer extends Action {
         ) return description;
 
         // CAS MARSHALL
-        if (personne instanceof Marshall) {
-            Direction directionMarshall;
-            if (Math.random() <= Marshall.NERVOSITE_MARSHALL) {
-                Random r = new Random();
-                directionMarshall = Direction.values()[r.nextInt(2)];
-                nouvelIndice = (directionMarshall == Direction.ARRIERE) ? Math.max(0, wagonActuel.getNumero() - 1) : Math.min(wagonActuel.getNumero() + 1, train.getNombreW() - 1);
-                wagonActuel = train.getWagon(nouvelIndice);
-                personne.setPosition(wagonActuel);
-                description = personne.toString() + " se déplace du wagon " + wagonActuel.getNumero() + " vers le wagon " + wagonActuel;
-            }
+        if (personne instanceof Bandit && Math.random() <= Marshall.NERVOSITE_MARSHALL) {
+            System.out.println("Marshall se déplace avant l'action du Bandit");
+            Random r = new Random();
+            Direction directionMarshall = Direction.values()[r.nextInt(2)];
+            nouvelIndiceM = (directionMarshall == Direction.ARRIERE) ? Math.max(0, wagonActuelM.getNumero() - 1) : Math.min(wagonActuelM.getNumero() + 1, train.getNombreW() - 1);
+            wagonActuelM = train.getWagon(nouvelIndiceM);
+            marshall.setPosition(wagonActuelM);
+            description = marshall.toString() + " se déplace du wagon " + marshall.getPosition().getNumero() + " vers le wagon " + wagonActuelM.getNumero();
         }
 
         // CAS BANDIT

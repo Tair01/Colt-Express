@@ -18,7 +18,7 @@ public class Train {
         NB_WAGONS = n;
         wagons = new ArrayList<>();
         for (int i = 0; i < NB_WAGONS; i++) {
-            wagons.add(new Wagon(m,i - 1, this));
+            wagons.add(new Wagon(m,i, this)); // Si l'indice est i - 1, le numero de 1 wagon est -1!
         }
         this.personnes = personnes != null ? personnes : new HashSet<>();
     }
@@ -49,5 +49,10 @@ public class Train {
         return null;
     }
     public Bandit getBanditChoisi(){ return banditChoisi;}
+    public Marshall getMarshall() {
+        for (Personne p : personnes) {
+            if (p instanceof Marshall) return (Marshall) p;
+        }
+        return null;
+    }
 }
-

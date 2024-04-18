@@ -9,6 +9,20 @@ public class Tirer extends Action {
     }
     @Override
     public String executer() {
+        Personne personne = getPersonne();
+        Train train = personne.getPosition().train;
+        Wagon wagonActuelM = train.getMarshall().getPosition();
+        Marshall marshall = train.getMarshall();
+        int nouvelIndiceM;
+        // CAS MARSHALL
+        if (personne instanceof Bandit && Math.random() <= Marshall.NERVOSITE_MARSHALL) {
+            System.out.println("Marshall se déplace avant l'action du Bandit");
+            Random r = new Random();
+            Direction directionMarshall = Direction.values()[r.nextInt(2)];
+            nouvelIndiceM = (directionMarshall == Direction.ARRIERE) ? Math.max(0, wagonActuelM.getNumero() - 1) : Math.min(wagonActuelM.getNumero() + 1, train.getNombreW() - 1);
+            wagonActuelM = train.getWagon(nouvelIndiceM);
+            marshall.setPosition(wagonActuelM);
+        }
         if (auteur.getNbActions() > 0) {
             if (auteur.getBalles() > 0) {
                 if (auteur instanceof Bandit) {
