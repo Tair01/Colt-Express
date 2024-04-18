@@ -11,7 +11,7 @@ public class VueCommandes extends JPanel implements Observer {
     private Bouton[] banditDeplacer;
     private Bouton banditBraquer, banditTirer;
     private JTextField textField;
-    private JLabel banditChoisi, nbActionDeBanditCh;
+    private JLabel banditChoisi, nbActionDeBanditCh, montantTotalDeButins;
     public VueCommandes(Modele m){
         this.m = m;
         m.addObserver(this);
@@ -24,7 +24,7 @@ public class VueCommandes extends JPanel implements Observer {
         Bandit banditChoisi = m.getTrain().getBanditChoisi();
         if (banditChoisi != null) {
             banditChoisi.addObserver(() -> {
-                changementNbActionsBanditChoisi(banditChoisi.getNbActions());
+                changementInfo(banditChoisi.getNbActions(), banditChoisi.montantT());
             });
         }
     }
@@ -40,6 +40,7 @@ public class VueCommandes extends JPanel implements Observer {
                 if(bandit != null){
                     banditChoisi.setText("Bandit choisi: " + nomBandit);
                     nbActionDeBanditCh.setText("Nombre d'actions : " + bandit.getNbActions());
+                    montantTotalDeButins.setText("Montant total : " + bandit.montantT() + "$");
                     if(bandit.getNbActions() == 0){
                         JOptionPane.showMessageDialog(VueCommandes.this, "Veuillez choisir un autre Bandit!", "Information", JOptionPane.INFORMATION_MESSAGE);
                         banditChoisi.setText("Entrez le nom d'un nouveau Bandit");
@@ -58,11 +59,15 @@ public class VueCommandes extends JPanel implements Observer {
         banditChoisi.setBounds(10, 40, 150, 30);
         nbActionDeBanditCh = new JLabel("Nombre d'actions : ");
         nbActionDeBanditCh.setBounds(10, 60,150,30);
+        montantTotalDeButins = new JLabel("Montant total: ");
+        montantTotalDeButins.setBounds(10,80,150,30);
         add(banditChoisi);
         add(nbActionDeBanditCh);
+        add(montantTotalDeButins);
     }
-    public void changementNbActionsBanditChoisi(int nbActions) {
+    public void changementInfo(int nbActions, int total) {
         nbActionDeBanditCh.setText("Nombre d'actions : " + nbActions);
+        montantTotalDeButins.setText("Montant total: " + total );
     }
     public void initBoutons(){
         //setLayout(null);

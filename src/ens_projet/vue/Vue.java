@@ -1,9 +1,13 @@
 package ens_projet.vue;
 
+import ens_projet.controleur.ControleurBandit;
 import ens_projet.modele.Modele;
 
 import javax.swing.*;
 import java.awt.*;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
+import static com.sun.java.accessibility.util.AWTEventMonitor.addMouseListener;
 
 public class Vue {
     private final Modele model;
@@ -28,6 +32,9 @@ public class Vue {
         frame.add(vueT, BorderLayout.CENTER);
         frame.add(vueC, BorderLayout.SOUTH);
         frame.add(vueE, BorderLayout.WEST);
+        ControleurBandit controleurBandit = new ControleurBandit(model, vueT, vueC);
+        addMouseListener(controleurBandit);
+        addKeyListener(controleurBandit);
         frame.pack();
         frame.setVisible(true);
     }

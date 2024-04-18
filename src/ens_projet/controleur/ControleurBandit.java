@@ -18,6 +18,9 @@ public class ControleurBandit implements MouseListener, KeyListener {
         modele = m;
         vueTrain = vT;
         vueCommandes = vC;
+
+        vueCommandes.addMouseListener(this);
+        vueCommandes.addKeyListener(this);
     }
     public void setBanditChoisi(Bandit b){
         banditChoisi = b;

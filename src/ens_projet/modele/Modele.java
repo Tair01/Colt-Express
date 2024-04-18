@@ -94,11 +94,12 @@ public class Modele extends Observable {
         return t;
     }
 
-    public static void main(String[] args){
+    public void jeu(){
         // f = new FenetreJeu();
         Modele j = new Modele();
         j.initialise();
         ArrayList<Bandit> bandits = j.getBandits();
+
         while (!j.partieFinie()){
             for(Bandit b: bandits){
 
