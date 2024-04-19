@@ -1,93 +1,74 @@
-# Projet_de_POGL
+# Colt Express
 
 
 
-## Getting started
+## Overview du jeu
+<p align="center">image du jeu final </p>
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Action Possible
 
-## Add your files
+Un personnage peut se déplacer vers l'avant, l'arrière, le haut c'est-à-dire sur le toit d'un wagon ou le bas dans le train.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Un bandit peut braquer un wagon pour voler des butins.
 
-```
-cd existing_repo
-git remote add origin https://gitlab.dsi.universite-paris-saclay.fr/tair.baurzhan/projet_de_pogl.git
-git branch -M main
-git push -uf origin main
-```
+Un bandit peut tirer avec une arme, généralement sur un autre personnage pour le neutraliser et voler son butin.
 
-## Integrate with your tools
+Les bandits peuvent interagir avec des objets présents dans les wagons, comme des caisses de munitions, des butins.
 
-- [ ] [Set up project integrations](https://gitlab.dsi.universite-paris-saclay.fr/tair.baurzhan/projet_de_pogl/-/settings/integrations)
+Le Marshall peut protéger le train en tirant sur les bandits présents dans un wagon voisin.
 
-## Collaborate with your team
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## Les objets du jeu
+__Train__
 
-## Test and Deploy
+Le train est composé de plusieurs wagons, dont un wagon locomotive.
 
-Use the built-in continuous integration in GitLab.
+Chaque wagon peut contenir des personnages, des butins et  des caisses de munitions.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+__Wagon__
 
-***
+Chaque wagon peut être identifié par un numéro ou un nom.
 
-# Editing this README
+Dans chaque wagon, il y a une certaine quantité de butins.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Le wagon locomotive contient un Magot avec 1000$ et un Marshall.
 
-## Suggestions for a good README
+Chaque wagon peut contenir seulement une caisse de munitions.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+__Butin__ 
 
-## Name
-Choose a self-explaining name for your project.
+Les butins peuvent être de différents types tels que des bourses, des bijoux et des magots.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Chaque type de butin possède une valeur monétaire en dollars qui lui est associée.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+__Caisse de Munitions__
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Chaque caisse de munitions contient un nombre spécifique de balles utilisables pour tirer.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Les caisses de munitions peuvent être placées dans différents wagons du train.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## Les personnages du jeu
+__Bandit__
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Les bandits sont des personnages qui tentent de braquer le train pour voler des butins dans les wagons.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Ils peuvent se déplacer à travers les wagons du train.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+Les bandits peuvent tirer sur d'autres personnages à l'aide des balles disponibles dans les caisses de munitions.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+__Marshall__
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+Le Marshall est le représentant de la loi et de l'ordre à bord du train.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Son objectif est d'empêcher les bandits de réussir leur braquage et de protéger les butins.
 
-## License
-For open source projects, say how it is licensed.
+Le Marshall peut uniquement se déplacer à l'intérieur des wagons du train.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Il peut également tirer sur les bandits pour les neutraliser.
+
+## Diagramme de classe
+
+Un lien sur le diagramme de classe 
+
+<p align="center">un screen de la diagramme de classe </p>
