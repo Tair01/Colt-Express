@@ -1,5 +1,4 @@
 import ens_projet.modele.*;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Classe de test pour la classe Tirer.
@@ -21,21 +21,22 @@ public class TirerTest {
     private Butin butin1, butin2, butin3;
     private Modele modele;
     private CaisseMunitions caisseMunitions1, caisseMunitions2;
+
     @Before
-    public void setUp(){
+    public void setUp() {
         // Initialisation des objets pour les tests
         modele = new Modele();
-        train = new Train(modele,4, personnes);
+        train = new Train(modele, 4, personnes);
         wagon1 = train.getWagon(0);
         wagon2 = train.getWagon(1);
         wagon3 = train.getWagon(2);
         wagon4 = train.getWagon(3);
 
         // Création des instances de Bandit et Marshall avec la liste de personnes
-        bandit1 = new Bandit(modele,"Alex", train);
-        bandit2 = new Bandit(modele,"Souleimane", train);
-        bandit3 = new Bandit(modele,"Tair", train);
-        marshall = new Marshall(modele,"Pierre", train);
+        bandit1 = new Bandit(modele, "Alex", train);
+        bandit2 = new Bandit(modele, "Souleimane", train);
+        bandit3 = new Bandit(modele, "Tair", train);
+        marshall = new Marshall(modele, "Pierre", train);
 
         personnes = new HashSet<>(Arrays.asList(bandit1, bandit2, bandit3, marshall));
         train.getPersonnes().addAll(personnes);
@@ -52,13 +53,13 @@ public class TirerTest {
         bandit3.setPosition(wagon1);
 
         // Création des butins
-        butin1 = new Bourse(modele,100, train.getWagon(0));
-        butin2 = new Bijou(modele,train.getWagon(0));
-        butin3 = new Magot(modele,train);
+        butin1 = new Bourse(modele, 100, train.getWagon(0));
+        butin2 = new Bijou(modele, train.getWagon(0));
+        butin3 = new Magot(modele, train);
     }
 
     @Test
-    public void executer(){
+    public void executer() {
         // Test de la méthode executer de la classe Tirer
 
         // Vérifier que chaque bandit a 6 balles au départ
@@ -74,9 +75,9 @@ public class TirerTest {
         assertEquals(3, wagon1.getButins().size());
 
         // Effectuer un braquage par le bandit 2 et le bandit 3
-        Braquer braquer1 = new Braquer(modele, bandit1, Direction.random());
-        Braquer braquer2 = new Braquer(modele, bandit2, Direction.random());
-        Braquer braquer3 = new Braquer(modele, bandit3, Direction.random());
+        Braquer braquer1 = new Braquer(modele, bandit1);
+        Braquer braquer2 = new Braquer(modele, bandit2);
+        Braquer braquer3 = new Braquer(modele, bandit3);
         braquer1.executer();
         braquer2.executer();
         braquer3.executer();
@@ -99,7 +100,7 @@ public class TirerTest {
         assertTrue(bandit3.montantT() > 0);
 
         // Effectuer une action de tir par le bandit 1
-        Action action = new Tirer(modele, bandit1, Direction.AVANT);
+        Action action = new Tirer(modele, bandit1);
         action.executer();
 
         // Vérifier que le nombre de balles du bandit 1 est réduit de 1 après le tir
@@ -110,7 +111,7 @@ public class TirerTest {
         assertTrue(bandit2.montantT() == 0 || bandit3.montantT() == 0);
 
         // Effectuer une action de tir par le bandit 2
-        Action action2 = new Tirer(modele, bandit2, Direction.AVANT);
+        Action action2 = new Tirer(modele, bandit2;
         action2.executer();
 
         // Vérifier que le nombre de balles du bandit 2 est réduit de 1 après le tir

@@ -4,24 +4,32 @@ public abstract class Action {
     private final Modele modele;
     final Personne auteur;
     final Direction direction;
-    public Action(Modele m,Personne a, Direction d){
+
+    public Action(Modele m, Personne a, Direction d) {
         modele = m;
         auteur = a;
         direction = d;
     }
-    public Personne getPersonne(){return auteur;}
-    public Direction getDirection(){return direction;}
+
+    public Personne getPersonne() {
+        return auteur;
+    }
+
+    //public Direction getDirection(){return direction;}
     public abstract String executer();
 
 }
 
-// TODO : ajouter des munitions dans les wagons -> 06/04 ☑
-// TODO : modifier les classes pour MVC -> 07/04 ☑
-// TODO : coder les vues du jeu -> 14/04
-// TODO : corriger tous les endroits où la vérification de la présence du butin sur le toit ou à l'intérieur est nécessaire -> 14/04
-// TODO : coder la logique du jeu -> 14/04
-// TODO : vérifier/améliorer les tests -> 14/04
-// TODO : rajouter de la documentation et améliorer le code si possible (optimisation, suppression variables/méthodes inutilisées...etc.) -> 15/04
-// TODO : remplir fichier README -> 15/04
+// TODO : ajouter des munitions dans les wagons ☑
+// TODO : modifier les classes pour MVC ☑
+// TODO : coder les vues du jeu
+// TODO : coder le contrôleur
+// TODO : corriger tous les endroits où la vérification de la présence du butin sur le toit ou à l'intérieur est nécessaire
+// TODO : coder la logique du jeu
+// TODO : vérifier/améliorer les tests
+// TODO : mettre à jour le diagramme
+// TODO : rajouter de la documentation et améliorer le code si possible (optimisation, suppression variables/méthodes inutilisées...etc.)
+// TODO : remplir fichier README
+// TODO : rajouter des éléments optionnels
 
 // soutenance : 24/04

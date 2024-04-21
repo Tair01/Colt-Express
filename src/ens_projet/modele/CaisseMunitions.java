@@ -1,13 +1,14 @@
 package ens_projet.modele;
 
-public class CaisseMunitions extends Butin{
+public class CaisseMunitions extends Butin {
     int nbBalles;
-    public CaisseMunitions(Modele m, Wagon p, int b){
-        super(m,0, p);
+
+    public CaisseMunitions(Modele m, Wagon p, int b) {
+        super(m, 0, p);
         nbBalles = b;
     }
 
-    public int getNbMunitions(){
+    public int getNbMunitions() {
         return nbBalles;
     }
 }

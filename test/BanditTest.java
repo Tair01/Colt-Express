@@ -1,5 +1,4 @@
 import ens_projet.modele.*;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,20 +20,20 @@ public class BanditTest {
     private CaisseMunitions caisseMunitions1, caisseMunitions2;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         // Initialisation des objets pour les tests
         modele = new Modele();
         train = new Train(modele, 4, personnes); // Passer le modèle comme paramètre au train
-        bandit1 = new Bandit(modele,"Alex", train); // Passer le modèle comme paramètre au bandit
-        bandit2 = new Bandit(modele,"Souleimane",  train);
-        bandit3 = new Bandit(modele,"Tair",train);
+        bandit1 = new Bandit(modele, "Alex", train); // Passer le modèle comme paramètre au bandit
+        bandit2 = new Bandit(modele, "Souleimane", train);
+        bandit3 = new Bandit(modele, "Tair", train);
 
         personnes = new HashSet<>(Arrays.asList(bandit1, bandit2, bandit3));
         train.getPersonnes().addAll(personnes);
 
         butin1 = new Bourse(modele, 100, train.getWagon(2));
-        butin2 = new Bijou(modele,train.getWagon(0));
-        butin3 = new Magot(modele,train);
+        butin2 = new Bijou(modele, train.getWagon(0));
+        butin3 = new Magot(modele, train);
 
         wagon1 = train.getWagon(0);
         wagon2 = train.getWagon(1);
@@ -118,7 +117,7 @@ public class BanditTest {
     @Test
     public void montantT() {
         // Création d'un bijou à ajouter au bandit1
-        Bijou bijou1 = new Bijou(modele,train.getWagon(2));
+        Bijou bijou1 = new Bijou(modele, train.getWagon(2));
 
         // Ajout de butins au bandit1
         bandit1.ajouteButin(butin1);
@@ -151,7 +150,7 @@ public class BanditTest {
      * Test de la méthode ajouteMunitions().
      */
     @Test
-    public void ajouteMunitions(){
+    public void ajouteMunitions() {
         // Vérification du nombre de balles initial du bandit1
         assertEquals(6, bandit1.getBalles());
 

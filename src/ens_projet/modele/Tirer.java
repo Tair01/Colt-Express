@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Tirer extends Action {
-    public Tirer(Modele m,Personne p, Direction d) {
-        super(m,p,d);
+    public Tirer(Modele m, Personne p) {
+        super(m, p, null);
     }
+
     @Override
     public String executer() {
         Personne personne = getPersonne();
@@ -57,7 +58,7 @@ public class Tirer extends Action {
                     chosenBandit.lacheButin();
                     auteur.tire();
                     auteur.utiliseAction();
-                    return auteur.toString() + " a tiré sur " + chosenBandit.toString() + ".";
+                    return auteur + " a tiré sur " + chosenBandit + ".";
                 } else {
                     ArrayList<Bandit> banditsWagon = auteur.getPosition().banditsPresents();
                     int i = 0;
@@ -70,7 +71,7 @@ public class Tirer extends Action {
                         banditsTouches.add(banditsWagon.get(i));
                         i++;
                     }
-                    String s = auteur.toString() + " a tiré sur : ";
+                    String s = auteur + " a tiré sur : ";
                     for (Bandit b : banditsTouches) {
                         s += (b.toString() + " ");
                         b.setSurLeToit();

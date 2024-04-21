@@ -19,10 +19,10 @@ public class DeplacerTest {
     private Modele modele;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         // Initialisation des objets pour les tests
         modele = new Modele();
-        train = new Train(modele,4, personnes);
+        train = new Train(modele, 4, personnes);
 
         wagon1 = train.getWagon(0);
         wagon2 = train.getWagon(1);
@@ -30,10 +30,10 @@ public class DeplacerTest {
         wagon4 = train.getWagon(3);
 
         // Création des personnages
-        bandit1 = new Bandit(modele,"Alex", train);
-        bandit2 = new Bandit(modele,"Souleimane", train);
-        bandit3 = new Bandit(modele,"Tair", train);
-        marshall = new Marshall(modele,"Pierre", train);
+        bandit1 = new Bandit(modele, "Alex", train);
+        bandit2 = new Bandit(modele, "Souleimane", train);
+        bandit3 = new Bandit(modele, "Tair", train);
+        marshall = new Marshall(modele, "Pierre", train);
 
         // Ajout des personnages à la liste des personnes dans le train
         personnes = new HashSet<>(Arrays.asList(bandit1, bandit2, bandit3, marshall));
@@ -56,22 +56,22 @@ public class DeplacerTest {
         assertEquals(2, bandit3.getPosition().getNumero());
 
         // Déplacement vers l'Avant
-        Action action = new Deplacer(modele,bandit1, Direction.AVANT);
+        Action action = new Deplacer(modele, bandit1, Direction.AVANT);
         action.executer();
         assertEquals(wagon2, bandit1.getPosition());
 
         // Déplacement vers l'Arrière
-        Action action1 = new Deplacer(modele,bandit3, Direction.ARRIERE);
+        Action action1 = new Deplacer(modele, bandit3, Direction.ARRIERE);
         action1.executer();
         assertEquals(wagon2, bandit3.getPosition());
 
         // Déplacement vers le Bas
-        Action action2 = new Deplacer(modele,bandit2, Direction.BAS);
+        Action action2 = new Deplacer(modele, bandit2, Direction.BAS);
         action2.executer();
         assertFalse(bandit2.isSurLeToit());
 
         // Déplacement vers le Haut
-        Action action3 = new Deplacer(modele,bandit2, Direction.HAUT);
+        Action action3 = new Deplacer(modele, bandit2, Direction.HAUT);
         action3.executer();
         assertTrue(bandit2.isSurLeToit());
     }

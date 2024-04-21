@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Classe de test pour la classe Braquer.
@@ -22,20 +23,20 @@ public class BraquerTest {
     private CaisseMunitions caisseMunitions1, caisseMunitions2;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         // Initialisation des objets pour les tests
         modele = new Modele();
-        train = new Train(modele,4, personnes);
+        train = new Train(modele, 4, personnes);
         wagon1 = train.getWagon(0);
         wagon2 = train.getWagon(1);
         wagon3 = train.getWagon(2);
         wagon4 = train.getWagon(3);
 
         // Crée les instances de Bandit et Marshall avec la liste de personnes
-        bandit1 = new Bandit(modele,"Alex", train);
-        bandit2 = new Bandit(modele,"Souleimane", train);
-        bandit3 = new Bandit(modele,"Tair", train);
-        marshall = new Marshall(modele,"Pierre", train);
+        bandit1 = new Bandit(modele, "Alex", train);
+        bandit2 = new Bandit(modele, "Souleimane", train);
+        bandit3 = new Bandit(modele, "Tair", train);
+        marshall = new Marshall(modele, "Pierre", train);
 
         personnes = new HashSet<>(Arrays.asList(bandit1, bandit2, bandit3, marshall));
         train.getPersonnes().addAll(personnes);
@@ -52,9 +53,9 @@ public class BraquerTest {
         marshall.setPosition(wagon4);
 
         // Création de quelques butins
-        butin1 = new Bourse(modele,100, train.getWagon(0));
-        butin2 = new Bijou(modele,train.getWagon(0));
-        butin3 = new Magot(modele,train);
+        butin1 = new Bourse(modele, 100, train.getWagon(0));
+        butin2 = new Bijou(modele, train.getWagon(0));
+        butin3 = new Magot(modele, train);
     }
 
     @Test
@@ -70,7 +71,7 @@ public class BraquerTest {
         wagon1.ajouterButin(butin3);
 
         // Création d'une action de Braquage pour bandit1
-        Braquer braquer = new Braquer(modele,bandit1, Direction.random());
+        Braquer braquer = new Braquer(modele, bandit1);
         braquer.executer();
 
         // Vérification du résultat du braquage pour bandit1
@@ -83,10 +84,10 @@ public class BraquerTest {
         assertTrue(bandit1.montantT() > 0);
 
         assertEquals(1, wagon1.getCaissesMunitions().size()); // Une balle a été retirée du wagon
-        assertEquals(9,bandit1.getBalles()); // Le bandit a récupéré 3 balles, car dans le wagon1 il y a une caisse de munitions avec 3 balles
+        assertEquals(9, bandit1.getBalles()); // Le bandit a récupéré 3 balles, car dans le wagon1 il y a une caisse de munitions avec 3 balles
 
         // Test de cas où le wagon ne contient pas de butins
-        Braquer braquer1 = new Braquer(modele,bandit2, Direction.random());
+        Braquer braquer1 = new Braquer(modele, bandit2);
         braquer1.executer();
 
         // Vérification du résultat du braquage pour bandit2 dans un wagon sans butins
@@ -94,14 +95,14 @@ public class BraquerTest {
         ArrayList<Butin> butinsBandit2 = bandit2.getButins();
 
         assertEquals(0, butinsWagon2.size());
-        assertEquals(0,butinsBandit2.size());
+        assertEquals(0, butinsBandit2.size());
 
         assertEquals(1, wagon2.getCaissesMunitions().size());
-        assertEquals(11,bandit2.getBalles()); // Le bandit2 a déjà 11 balles
+        assertEquals(11, bandit2.getBalles()); // Le bandit2 a déjà 11 balles
 
         // Test de cas où le wagon contient une caisse de munitions
-        Braquer braquer2 = new Braquer(modele,bandit2, Direction.random());
+        Braquer braquer2 = new Braquer(modele, bandit2);
         braquer2.executer();
-        assertEquals(16,  bandit2.getBalles()); // Le bandit a 16 balles car il se situe dans le wagon2 et le wagon2 a une caisse de munitions avec 5 balles
+        assertEquals(16, bandit2.getBalles()); // Le bandit a 16 balles car il se situe dans le wagon2 et le wagon2 a une caisse de munitions avec 5 balles
     }
 }

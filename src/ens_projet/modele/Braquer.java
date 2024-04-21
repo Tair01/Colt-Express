@@ -1,16 +1,17 @@
 package ens_projet.modele;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Braquer extends Action {
-    public Braquer(Modele m, Personne p, Direction d) {
-        super(m, p, d);
+    public Braquer(Modele m, Personne p) {
+        super(m, p, null);
     }
 
     @Override
     public String executer() {
         Personne personne = getPersonne();
-        Train train = personne.getPosition().train;
+        /*Train train = personne.getPosition().getTrain();
         Wagon wagonActuelM = train.getMarshall().getPosition();
         Marshall marshall = train.getMarshall();
         int nouvelIndiceM;
@@ -22,7 +23,7 @@ public class Braquer extends Action {
             nouvelIndiceM = (directionMarshall == Direction.ARRIERE) ? Math.max(0, wagonActuelM.getNumero() - 1) : Math.min(wagonActuelM.getNumero() + 1, train.getNombreW() - 1);
             wagonActuelM = train.getWagon(nouvelIndiceM);
             marshall.setPosition(wagonActuelM);
-        }
+        }*/
         String message = ""; // il faudra vérifier à l'issue de l'exécution de cette méthode qu'elle n'a pas renvoyé la chaîne vide (avant d'afficher ceci dans le journal des actions)
         if (auteur instanceof Bandit && auteur.getNbActions() > 0) {
             Random random = new Random();
@@ -33,14 +34,14 @@ public class Braquer extends Action {
                 ((Bandit) auteur).ajouteButin(butinRecupere);
                 auteur.getPosition().retireButin(butinRecupere);
                 auteur.utiliseAction();
-                message += auteur.toString() + " a récupéré le butin :" + butinRecupere.toString() + "\n";
+                message += auteur + " a récupéré le butin :" + butinRecupere.toString() + "\n";
                 System.out.println(message);
             }
             if (!caissesW.isEmpty()) {
                 CaisseMunitions caisseRamassee = caissesW.get(random.nextInt(caissesW.size()));
                 ((Bandit) auteur).ajouteMunitions(caisseRamassee);
                 auteur.getPosition().retireButin(caisseRamassee);
-                message += auteur.toString() + " a ramassé une caisse de munitions." + "\n";
+                message += auteur + " a ramassé une caisse de munitions." + "\n";
             }
         }
         return message;
