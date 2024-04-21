@@ -42,7 +42,7 @@ public class Tirer extends Action {
                     chosenBandit.lacheButin();
                     auteur.tire();
                     ((Bandit)auteur).utiliseAction();
-                    return auteur + " a tiré sur " + chosenBandit + ".";
+                    return auteur + " a tiré sur " + chosenBandit + ". Ce dernier a lâché un butin.";
                 } else {
                     ArrayList<Bandit> banditsWagon = auteur.getPosition().banditsPresents();
                     int i = 0;
@@ -59,9 +59,11 @@ public class Tirer extends Action {
                         s.append(b).append(" ");
                         b.setSurLeToit();
                     }
+                    modele.notifyObservers();
                     return s.toString();
                 }
             }
+            modele.notifyObservers();
             return auteur + " a essayé de tirer mais est à court de munitions.";
         }
 }

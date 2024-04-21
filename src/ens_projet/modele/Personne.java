@@ -4,8 +4,8 @@ import ens_projet.vue.Observable;
 
 import java.util.Objects;
 
-public abstract class Personne extends Observable {
-    //private final Modele modele;
+public abstract class Personne {
+    private final Modele modele;
     final static int NB_BALLES = 6;
     private final String nom;
     protected Wagon position;
@@ -16,7 +16,7 @@ public abstract class Personne extends Observable {
     public Personne(Modele m, String n, boolean s, Train t) {
         // vérification de l'absence du nom choisi dans le train en question
         if (!(checkNomDejaUtilise(t, n))) {
-            //modele = m;
+            modele = m;
             nom = n;
             surLeToit = s;
             this.train = t;
@@ -56,15 +56,8 @@ public abstract class Personne extends Observable {
         surLeToit = !(surLeToit);
     }
 
-//    void effectuerAction(Action a) {
-//        if (a.getPersonne().toString().equals(toString())) a.executer();
-//    }
-
     @Override
     public String toString() {
         return nom;
     }
-//    public void notifyActionsChanged() {
-//        notifyObservers();
-//    }
 }

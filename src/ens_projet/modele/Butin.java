@@ -6,7 +6,6 @@ public abstract class Butin {
     private Bandit possesseur;
     Wagon position;
     private boolean isRamasse, surLeToit;
-    //private String nom;
 
     public Butin(Modele m, int v, Wagon p) {
         modele = m;
@@ -31,9 +30,5 @@ public abstract class Butin {
         return surLeToit;
     }
 
-    /*public ens_projet.modele.Wagon getPositionButin() {return positionButin;}
-    public boolean estRamasse(){return ramasse;}
-
-    public void setBandit(ens_projet.modele.Bandit b) { this.b = b;}*/
 }
 

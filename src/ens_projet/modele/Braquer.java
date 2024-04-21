@@ -10,22 +10,8 @@ public class Braquer extends Action {
 
     @Override
     public String executer() {
-        Personne personne = getPersonne();
-        /*Train train = personne.getPosition().getTrain();
-        Wagon wagonActuelM = train.getMarshall().getPosition();
-        Marshall marshall = train.getMarshall();
-        int nouvelIndiceM;
-        // CAS MARSHALL
-        if (personne instanceof Bandit && Math.random() <= Marshall.NERVOSITE_MARSHALL) {
-            System.out.println("Marshall se déplace avant l'action du Bandit");
-            Random r = new Random();
-            Direction directionMarshall = Direction.values()[r.nextInt(2)];
-            nouvelIndiceM = (directionMarshall == Direction.ARRIERE) ? Math.max(0, wagonActuelM.getNumero() - 1) : Math.min(wagonActuelM.getNumero() + 1, train.getNombreW() - 1);
-            wagonActuelM = train.getWagon(nouvelIndiceM);
-            marshall.setPosition(wagonActuelM);
-        }*/
         String message = ""; // il faudra vérifier à l'issue de l'exécution de cette méthode qu'elle n'a pas renvoyé la chaîne vide (avant d'afficher ceci dans le journal des actions)
-        if (((Bandit)auteur).getNbActions() > 0) {
+        if (((Bandit) auteur).getNbActions() > 0) {
             Random random = new Random();
             ArrayList<Butin> butinsW = auteur.getPosition().getButins();
             ArrayList<CaisseMunitions> caissesW = auteur.getPosition().getCaissesMunitions();
@@ -44,6 +30,7 @@ public class Braquer extends Action {
                 message += auteur + " a ramassé une caisse de munitions." + "\n";
             }
         }
+        modele.notifyObservers();
         return message;
     }
 }

@@ -35,20 +35,4 @@ public class Train {
         return personnes != null ? personnes : new HashSet<>();
     }
 
-    public Bandit choisirBandit(String nomB) {
-        for (Personne p : personnes) {
-            if (p instanceof Bandit && p.toString().equals(nomB)) {
-                return (Bandit) p;
-            }
-        }
-
-        return null;
-    }
-
-    public Marshall getMarshall() {
-        for (Personne p : personnes) {
-            if (p instanceof Marshall) return (Marshall) p;
-        }
-        return null;
-    }
 }

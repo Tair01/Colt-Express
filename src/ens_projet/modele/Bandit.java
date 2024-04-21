@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class
 Bandit extends Personne {
-    static int NB_ACTIONS = 4;
+    public static int NB_ACTIONS = 4;
 
     int actions;
     private ArrayList<Butin> butins;

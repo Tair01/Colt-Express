@@ -1,6 +1,6 @@
 package ens_projet.vue;
 
-import ens_projet.controleur.ControleurBandit;
+import ens_projet.controleur.Controleur;
 import ens_projet.modele.Modele;
 
 import javax.swing.*;
@@ -10,11 +10,13 @@ public class Vue {
     private final Modele model;
     final JFrame frame;
     private final VueCommandes vueC;
+
+    public VueCommandes getVueCommandes(){
+        return vueC;
+    }
     private final VueEtat vueE;
     private final VueTrain vueT;
-
-    // TODO - réfléchir : faut-il rajouter une classe VueWagon et transformer VueTrain en JFrame dont le Layout est Flow ou Grid ? VueWagon pourra aussi être un JFrame en FlowLayout de deux autres JFrames en FlowLayout (intérieur et toit) (qui eux-mêmes peuvent être deux JFrames flowLayout : l'un montrant les personnes et l'autre montrant les butins)
-    // https://javatutorial.net/wp-content/uploads/2017/07/gridLayout.png
+    public Controleur controleur;
 
     public Vue(Modele m) {
         model = m;
@@ -29,9 +31,8 @@ public class Vue {
         frame.add(vueT, BorderLayout.CENTER);
         frame.add(vueC, BorderLayout.SOUTH);
         frame.add(vueE, BorderLayout.WEST);
-        ControleurBandit controleurBandit = new ControleurBandit(model, vueC);
-        frame.addMouseListener(controleurBandit);
-        //frame.addKeyListener(controleurBandit);
+        controleur = new Controleur(model, vueC);
+        frame.addMouseListener(controleur);
         frame.pack();
         frame.setVisible(true);
         vueC.repaint();
@@ -44,5 +45,4 @@ public class Vue {
         vueT.repaint();
         vueC.repaint();
     }
-
 }

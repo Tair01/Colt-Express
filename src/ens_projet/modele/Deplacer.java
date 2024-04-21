@@ -50,6 +50,7 @@ public class Deplacer extends Action {
                 description = (direction == Direction.BAS) ? (personne + " est descendu.") : (personne + " est monté.");
             }
         }
+        modele.notifyObservers();
         // si l'auteur du déplacement et/ou la direction n'ont pas permis l'exécution du déplacement, description sera égal à null à ce stade (il faudra donc vérifier à chaque fois que le déplacement d'un personnage n'est pas null)
         return description;
     }
