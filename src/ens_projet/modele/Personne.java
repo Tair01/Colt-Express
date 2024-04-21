@@ -7,12 +7,10 @@ import java.util.Objects;
 public abstract class Personne extends Observable {
     //private final Modele modele;
     final static int NB_BALLES = 6;
-    static int NB_ACTIONS = 4;
     private final String nom;
     protected Wagon position;
     Train train;
     int balles;
-    int actions;
     private boolean surLeToit;
 
     public Personne(Modele m, String n, boolean s, Train t) {
@@ -48,14 +46,6 @@ public abstract class Personne extends Observable {
 
     public void tire() {
         if (balles > 0) balles--;
-    }
-
-    public void utiliseAction() {
-        if (actions > 0) actions--;
-    }
-
-    public int getNbActions() {
-        return actions;
     }
 
     public boolean isSurLeToit() {

@@ -1,6 +1,8 @@
 package ens_projet.modele;
 
 import ens_projet.vue.Observable;
+import ens_projet.vue.Vue;
+import ens_projet.vue.VueJeuFini;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,10 +14,25 @@ import java.util.Scanner;
 public class Modele extends Observable {
     public static final int NB_WAGONS = 5;
     public static final int NB_BANDITS = 3;
+    public Bandit banditEnAction;
     private final HashSet<Personne> personnes = new HashSet<>();
     private final Train t;
 
-    // private final FenetreJeu f = new FenetreJeu();
+    public Bandit getBanditEnAction() {
+        return banditEnAction;
+    }
+
+    public void setBanditEnAction(Bandit banditEnAction) {
+        this.banditEnAction = banditEnAction;
+    }
+
+    public void setEnAction(boolean enAction) {
+        this.enAction = enAction;
+    }
+
+    public boolean enAction;
+
+
     public Modele() {
         t = new Train(this, NB_WAGONS, personnes);
     }
@@ -72,18 +89,19 @@ public class Modele extends Observable {
         initialiseWagons();
     }
 
-    public boolean partieFinie() {
+    // renvoie null si la partie n'est pas encore fini, le nom du gagnant sinon
+    public String partieFinie() {
         for (Personne p : personnes) {
             if (p instanceof Bandit) {
                 // la partie se termine si l'un des bandits présents a accumulé au moins 5000$ de butin
                 if (((Bandit) p).montantT() >= 5000) {
                     System.out.println("Partie finie, joueur gagnant : " + p);
                     // f.finalScreen();
-                    return true;
+                    return p.toString();
                 }
             }
         }
-        return false;
+        return null;
     }
 
     public ArrayList<Bandit> getBandits() {
@@ -100,18 +118,26 @@ public class Modele extends Observable {
         return t;
     }
 
-    public void jeu() {
+    static public void jeu() {
         // f = new FenetreJeu();
         Modele j = new Modele();
         j.initialise();
         ArrayList<Bandit> bandits = j.getBandits();
-
-        while (!j.partieFinie()) {
-            for (Bandit b : bandits) {
-
+        Vue v = new Vue(j);
+        while (j.partieFinie() == null) {
+            int k = 0; boolean stop = false;
+            j.setBanditEnAction(bandits.get(k));
+            System.out.println("Au tour de " + j.getBanditEnAction() + " !");
+            while(!stop && k < bandits.size()) {
+                if(bandits.get(k).getNbActions() == 0) {
+                    stop = true;
+                    k++;
+                    v.refresh();
+                }
             }
+            for(Bandit b : bandits) b.resetNbActions();
         }
-
+        new VueJeuFini(v, j.partieFinie());
     }
 
 }

@@ -7,7 +7,6 @@ public class Main {
     public static void main(String[] args) {
         Modele m = new Modele();
         m.initialise();
-        Vue v = new Vue(m);
-        v.afficheTout();
+        Modele.jeu();
     }
 }

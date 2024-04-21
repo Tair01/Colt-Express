@@ -36,17 +36,17 @@ public class Deplacer extends Action {
         }
 
         // CAS BANDIT
-        if (personne.getNbActions() > 0) {
+        if (((Bandit)personne).getNbActions() > 0) {
             if (direction == Direction.AVANT || direction == Direction.ARRIERE) {
                 nouvelIndice = (direction == Direction.ARRIERE) ? Math.max(0, wagonActuel.getNumero() - 1) : Math.min(wagonActuel.getNumero() + 1, train.getNombreW() - 1);
                 wagonActuel = train.getWagon(nouvelIndice);
                 personne.setSurLeToit();
                 personne.setPosition(wagonActuel);
-                personne.utiliseAction();
+                ((Bandit)personne).utiliseAction();
                 description = personne + " se déplace du wagon " + wagonActuel.getNumero() + " vers le wagon " + wagonActuel;
             } else if (direction == Direction.BAS || direction == Direction.HAUT) {
                 personne.setSurLeToit();
-                personne.utiliseAction();
+                ((Bandit)personne).utiliseAction();
                 description = (direction == Direction.BAS) ? (personne + " est descendu.") : (personne + " est monté.");
             }
         }

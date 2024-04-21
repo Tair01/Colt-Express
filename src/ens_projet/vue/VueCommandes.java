@@ -15,18 +15,18 @@ import java.awt.*;
 public class VueCommandes extends JPanel {
     private final Modele m;
     private Bouton[] banditDeplacer;
-    private Bouton banditBraquer, banditTirer;
-    private JTextField textField;
-    private final JLabel choisirBandit;
-    private final JLabel nbActionsBandit;
-    private final JLabel montantButin;
+    private Bouton banditBraquer, banditTirer, banditAction;
+    //private JTextField textField;
+    //private final JLabel choisirBandit;
+    //private final JLabel nbActionsBandit;
+    //private final JLabel montantButin;
 
     public VueCommandes(Modele m) {
         this.m = m;
-        setPreferredSize(new Dimension(1000, 250));
+        setPreferredSize(new Dimension(1000, 200));
         setLayout(null);
-        initTextField();
-        choisirBandit = new JLabel("Bandit choisi :");
+        //initTextField();
+        /*choisirBandit = new JLabel("Bandit choisi :");
         choisirBandit.setBounds(10, 40, 150, 30);
         nbActionsBandit = new JLabel("Nombre d'actions :");
         nbActionsBandit.setBounds(10, 60, 150, 30);
@@ -34,18 +34,18 @@ public class VueCommandes extends JPanel {
         montantButin.setBounds(10, 80, 150, 30);
         add(choisirBandit);
         add(nbActionsBandit);
-        add(montantButin);
+        add(montantButin);*/
         initBoutons();
     }
 
-    public void initTextField() {
+    /*public void initTextField() {
         textField = new JTextField();
         textField.setBounds(10, 10, 150, 30);
         textField.setPreferredSize(new Dimension(150, 30));
         textField.addActionListener(e -> {
-            String nomBandit = textField.getText();
+            String nomBandit = m.getBanditEnAction().toString();
             Bandit bandit = m.getTrain().choisirBandit(nomBandit);
-            if (bandit != null) {
+            /*if (bandit != null) {
                 choisirBandit.setText("Bandit choisi : " + nomBandit);
                 nbActionsBandit.setText("Nombre d'actions : " + bandit.getNbActions());
                 montantButin.setText("Montant total : "
@@ -60,19 +60,18 @@ public class VueCommandes extends JPanel {
 
         });
         add(textField);
-        //return bandit;
-    }
+    }*/
 
     public void initBoutons() {
         //setLayout(null);
-        int size = 65;
+        int size = 60;
 
 
         // ce carré central permet de positionner automatiquement les six boutons
         // en effet, la forme groupée de des boutons de déplacement forme un carré au milieu, donc pour les positionner, nous pouvons l'exploiter
         // et nous pouvons nous servir de cela pour positionner également les boutons d'action
         // size, X, Y
-        int[] centralSquare = {75, 275, 87};
+        int[] centralSquare = {60, 200, 75};
 
         // Positions et dimensions des boutons de déplacement
 
@@ -87,11 +86,13 @@ public class VueCommandes extends JPanel {
         }
 
         // Position et dimension des boutons "Braquer" et "Tirer"
-        banditBraquer = new Bouton("Braquer", centralSquare[1] + centralSquare[0] + 2 * size + 30, centralSquare[2] - size/2, size * 3, size * 2);
-        banditTirer = new Bouton("Tirer", centralSquare[1] + centralSquare[0] + 5 * size + 60, centralSquare[2] - size/2, size * 3, size * 2);
+        banditBraquer = new Bouton("Braquer", centralSquare[1] + centralSquare[0] + size + 50, centralSquare[2] - size/2, size * 3, size * 2);
+        banditTirer = new Bouton("Tirer", centralSquare[1] + centralSquare[0] + size*4 + 50, centralSquare[2] - size/2, size * 3, size * 2);
+        banditAction = new Bouton("Action !", centralSquare[1] + centralSquare[0] + size*7 + 50, centralSquare[2] - size/2, size*3, size*2);
 
-        this.add(banditBraquer);
-        this.add(banditTirer);
+        add(banditAction);
+        add(banditBraquer);
+        add(banditTirer);
     }
 
     @Override
@@ -111,8 +112,12 @@ public class VueCommandes extends JPanel {
         return banditTirer;
     }
 
-    public JTextField getTextField() {
-        return textField;
+    public Bouton getBanditAction() {
+        return banditAction;
     }
+
+    /*public JTextField getTextField() {
+        return textField;
+    }*/
 
 }

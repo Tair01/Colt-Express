@@ -1,6 +1,8 @@
 package ens_projet.controleur;
 
 import ens_projet.modele.*;
+import ens_projet.vue.Observable;
+import ens_projet.vue.Observer;
 import ens_projet.vue.VueCommandes;
 
 import java.awt.event.MouseEvent;
@@ -10,6 +12,8 @@ public class ControleurBandit implements MouseListener {
     private final Modele modele;
     //private final VueTrain vueT;
     private final VueCommandes vueC;
+
+    Bandit banditChoisi;
 
     public ControleurBandit(Modele m, VueCommandes vC) {
         modele = m;
@@ -24,12 +28,23 @@ public class ControleurBandit implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         int mouseX = e.getX();
         int mouseY = e.getY();
-        Bandit banditChoisi;
         Action actionChoisie = null;
-        banditChoisi = modele.getTrain().choisirBandit(vueC.getTextField().getText());
+        banditChoisi = modele.getBanditEnAction();
+        //banditChoisi = modele.getTrain().choisirBandit(vueC.getTextField().getText());
         if (banditChoisi != null) {
-            if (vueC.getBanditBraquer().contains(mouseX, mouseY)) actionChoisie = new Braquer(modele, banditChoisi);
-            else if (vueC.getBanditTirer().contains(mouseX, mouseY)) actionChoisie = new Tirer(modele, banditChoisi);
+            if (vueC.getBanditBraquer().contains(mouseX, mouseY)) {
+                actionChoisie = new Braquer(modele, banditChoisi);
+                System.out.println("OK, braquage");
+            }
+            else if (vueC.getBanditTirer().contains(mouseX, mouseY)){
+                actionChoisie = new Tirer(modele, banditChoisi);
+                System.out.println("OK, tir");
+            }
+            else if (vueC.getBanditAction().contains(mouseX, mouseY) && banditChoisi.getNbActions() == 0) {
+                modele.setEnAction(false);
+                modele.notifyObservers();
+                System.out.println("OK, action !");
+            }
             else {
                 for (Bouton b : vueC.getBanditDeplacer()) {
                     if (b.contains(mouseX, mouseY)) {
@@ -47,12 +62,20 @@ public class ControleurBandit implements MouseListener {
                                 actionChoisie = new Deplacer(modele, banditChoisi, Direction.BAS);
                                 break;
                         }
+                        System.out.println("OK, déplacement" + b.getText());
                         break;
                     }
                 }
             }
-            if(actionChoisie != null) actionChoisie.executer();
+            if(actionChoisie != null) {
+                actionChoisie.executer();
+                System.out.println(actionChoisie);
+                return;
+            }
+            System.out.println("action choisie null");
+            return;
         }
+        System.out.println("banditChoisi null");
     }
 
     @Override

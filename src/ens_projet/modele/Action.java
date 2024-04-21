@@ -18,6 +18,11 @@ public abstract class Action {
     //public Direction getDirection(){return direction;}
     public abstract String executer();
 
+    @Override
+    public String toString(){
+        return executer();
+    }
+
 }
 
 // TODO : ajouter des munitions dans les wagons ☑

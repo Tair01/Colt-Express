@@ -25,7 +25,7 @@ public class Braquer extends Action {
             marshall.setPosition(wagonActuelM);
         }*/
         String message = ""; // il faudra vérifier à l'issue de l'exécution de cette méthode qu'elle n'a pas renvoyé la chaîne vide (avant d'afficher ceci dans le journal des actions)
-        if (auteur instanceof Bandit && auteur.getNbActions() > 0) {
+        if (((Bandit)auteur).getNbActions() > 0) {
             Random random = new Random();
             ArrayList<Butin> butinsW = auteur.getPosition().getButins();
             ArrayList<CaisseMunitions> caissesW = auteur.getPosition().getCaissesMunitions();
@@ -33,7 +33,7 @@ public class Braquer extends Action {
                 Butin butinRecupere = butinsW.get(random.nextInt(butinsW.size()));
                 ((Bandit) auteur).ajouteButin(butinRecupere);
                 auteur.getPosition().retireButin(butinRecupere);
-                auteur.utiliseAction();
+                ((Bandit) auteur).utiliseAction();
                 message += auteur + " a récupéré le butin :" + butinRecupere.toString() + "\n";
                 System.out.println(message);
             }

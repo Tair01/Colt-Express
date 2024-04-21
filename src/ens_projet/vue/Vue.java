@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Vue {
     private final Modele model;
-    private final JFrame frame;
+    final JFrame frame;
     private final VueCommandes vueC;
     private final VueEtat vueE;
     private final VueTrain vueT;
@@ -34,11 +34,14 @@ public class Vue {
         //frame.addKeyListener(controleurBandit);
         frame.pack();
         frame.setVisible(true);
+        vueC.repaint();
+        vueE.repaint();
+        vueT.repaint();
     }
 
-    public void afficheTout() {
-        vueT.repaint();
+    public void refresh(){
         vueE.repaint();
+        vueT.repaint();
         vueC.repaint();
     }
 

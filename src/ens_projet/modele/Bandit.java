@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class
 Bandit extends Personne {
+    static int NB_ACTIONS = 4;
+
+    int actions;
     private ArrayList<Butin> butins;
 
     public Bandit(Modele m, String s, Train t) {
@@ -11,7 +14,7 @@ Bandit extends Personne {
         position = t.getWagon(0);
         butins = new ArrayList<>();
         balles = Personne.NB_BALLES;
-        actions = Personne.NB_ACTIONS;
+        actions = NB_ACTIONS;
     }
 
     public ArrayList<Butin> getButins() {
@@ -34,11 +37,22 @@ Bandit extends Personne {
         for (Butin b : butins) {
             t += b.getValeur();
         }
-        System.out.println(this + " a " + t + "$");
         return t;
     }
 
     public void ajouteMunitions(CaisseMunitions c) {
         balles += c.getNbMunitions();
     }
+
+    public void utiliseAction() {
+        if (actions > 0) actions--;
+    }
+
+    public int getNbActions() {
+        return actions;
+    }
+    public void resetNbActions() {
+        this.actions = NB_ACTIONS;
+    }
+
 }

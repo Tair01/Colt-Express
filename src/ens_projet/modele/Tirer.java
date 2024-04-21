@@ -4,29 +4,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Tirer extends Action {
-    public Tirer(Modele m, Personne p) {
-        super(m, p, null);
+    public Tirer(Modele m,Personne p) {
+        super(m,p,null);
     }
-
     @Override
     public String executer() {
-        Personne personne = getPersonne();
-        Train train = personne.getPosition().train;
-        Wagon wagonActuelM = train.getMarshall().getPosition();
-        Marshall marshall = train.getMarshall();
-        int nouvelIndiceM;
-        // CAS MARSHALL
-        if (personne instanceof Bandit && Math.random() <= Marshall.NERVOSITE_MARSHALL) {
-            System.out.println("Marshall se déplace avant l'action du Bandit");
-            Random r = new Random();
-            Direction directionMarshall = Direction.values()[r.nextInt(2)];
-            nouvelIndiceM = (directionMarshall == Direction.ARRIERE) ? Math.max(0, wagonActuelM.getNumero() - 1) : Math.min(wagonActuelM.getNumero() + 1, train.getNombreW() - 1);
-            wagonActuelM = train.getWagon(nouvelIndiceM);
-            marshall.setPosition(wagonActuelM);
-        }
-        if (auteur.getNbActions() > 0) {
             if (auteur.getBalles() > 0) {
-                if (auteur instanceof Bandit) {
+                if (auteur instanceof Bandit && ((Bandit)auteur).getNbActions() > 0) {
                     Random random = new Random();
                     ArrayList<Bandit> banditsWagon = auteur.getPosition().banditsPresents();
                     Bandit chosenBandit = null; // Initialisation pour éviter une référence non assignée
@@ -57,7 +41,7 @@ public class Tirer extends Action {
                     }
                     chosenBandit.lacheButin();
                     auteur.tire();
-                    auteur.utiliseAction();
+                    ((Bandit)auteur).utiliseAction();
                     return auteur + " a tiré sur " + chosenBandit + ".";
                 } else {
                     ArrayList<Bandit> banditsWagon = auteur.getPosition().banditsPresents();
@@ -66,21 +50,19 @@ public class Tirer extends Action {
                     ArrayList<Bandit> banditsTouches = new ArrayList<>();
                     while (auteur.getBalles() > 0 && i < banditsWagon.size()) {
                         auteur.tire();
-                        auteur.utiliseAction();
                         banditsWagon.get(i).lacheButin();
                         banditsTouches.add(banditsWagon.get(i));
                         i++;
                     }
-                    String s = auteur + " a tiré sur : ";
+                    StringBuilder s = new StringBuilder(auteur + " a tiré sur : ");
                     for (Bandit b : banditsTouches) {
-                        s += (b.toString() + " ");
+                        s.append(b).append(" ");
                         b.setSurLeToit();
                     }
-                    return s;
+                    return s.toString();
                 }
             }
-            return "Le nombre de balles est égal à 0";
+            return auteur + " a essayé de tirer mais est à court de munitions.";
         }
-        return "Le nombre d'actions est égal à 0"; // Plus d'actions disponibles
-    }
 }
+

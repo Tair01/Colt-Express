@@ -6,11 +6,8 @@ import java.awt.*;
 public class VueJeuFini {
     private final JFrame frame;
 
-    public VueJeuFini(JFrame f) {
-        frame = f;
-    }
-
-    public void affichePartieFinal(String nomGagnant) {
+    public VueJeuFini(Vue v, String nomGagnant) {
+        frame = v.frame;
         frame.getContentPane().removeAll();
         JLabel label = new JLabel("Le nom du Gagnant: " + nomGagnant);
         label.setFont(new Font("Verdana", Font.BOLD, 20));
@@ -20,4 +17,5 @@ public class VueJeuFini {
         frame.revalidate();
         frame.repaint();
     }
+
 }
