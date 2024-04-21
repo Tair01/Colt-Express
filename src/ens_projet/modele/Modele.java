@@ -19,13 +19,13 @@ public class Modele extends Observable {
     private boolean enAction;
     private List<Action>[] actionsPlanifiees;  // Actions planifiées pour chaque bandit
 
-    public Modele() {
+    public Modele(boolean auto) {
         t = new Train(this, NB_WAGONS, personnes);
         actionsPlanifiees = new List[NB_JOUEURS];  // Suppose un nombre égal de bandits et de joueurs
         for (int i = 0; i < NB_JOUEURS; i++) {
             actionsPlanifiees[i] = new ArrayList<>();
         }
-        initialise();
+        initialise(auto);
     }
 
     public void toggleMode() {
@@ -54,15 +54,20 @@ public class Modele extends Observable {
         }
     }
 
-    private void initialisePersonnes() {
+    private void initialisePersonnes(boolean auto) {
         Scanner scanner = new Scanner(System.in);
         String nomBandit;
         for (int i = 0; i < NB_JOUEURS; i++) {
-            System.out.println("Entrez le nom du bandit n°" + (i + 1) + " : ");
-            nomBandit = scanner.nextLine().trim();
-            while (nomBandit.isEmpty()) {
-                System.out.println("Merci d'entrer un nom non vide et qui n'a pas déjà été utilisé.");
+            if(auto) {
+                nomBandit = "Bandit" + i;
+            }
+            else{
+                System.out.println("Entrez le nom du bandit n°" + (i + 1) + " : ");
                 nomBandit = scanner.nextLine().trim();
+                while (nomBandit.isEmpty()) {
+                    System.out.println("Merci d'entrer un nom non vide et qui n'a pas déjà été utilisé.");
+                    nomBandit = scanner.nextLine().trim();
+                }
             }
             personnes.add(new Bandit(this, nomBandit, t));
         }
@@ -92,8 +97,8 @@ public class Modele extends Observable {
         notifyObservers();
     }
 
-    private void initialise() {
-        initialisePersonnes();
+    private void initialise(boolean auto) {
+        initialisePersonnes(auto);
         initialiseWagons();
     }
 
@@ -139,7 +144,7 @@ public class Modele extends Observable {
     }
 
     public static void jeu() {
-        Modele modele = new Modele();
+        Modele modele = new Modele(false);
         Vue vue = new Vue(modele);
         Controleur controleur = new Controleur(modele, vue.getVueCommandes());
 

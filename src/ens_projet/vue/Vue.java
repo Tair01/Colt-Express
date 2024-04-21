@@ -25,13 +25,13 @@ public class Vue {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setLocationRelativeTo(null); // Centrer la fenêtre sur l'écran
-        vueC = new VueCommandes(m);
         vueE = new VueEtat(m);
         vueT = new VueTrain(m);
+        vueC = new VueCommandes(m);
         frame.add(vueT, BorderLayout.CENTER);
-        frame.add(vueC, BorderLayout.SOUTH);
         frame.add(vueE, BorderLayout.WEST);
         controleur = new Controleur(model, vueC);
+        frame.add(vueC, BorderLayout.SOUTH);
         frame.addMouseListener(controleur);
         frame.pack();
         frame.setVisible(true);

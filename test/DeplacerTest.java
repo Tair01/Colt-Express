@@ -21,7 +21,7 @@ public class DeplacerTest {
     @Before
     public void setUp() {
         // Initialisation des objets pour les tests
-        modele = new Modele();
+        modele = new Modele(true);
         train = new Train(modele, 4, personnes);
 
         wagon1 = train.getWagon(0);

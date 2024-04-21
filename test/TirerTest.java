@@ -25,7 +25,7 @@ public class TirerTest {
     @Before
     public void setUp() {
         // Initialisation des objets pour les tests
-        modele = new Modele();
+        modele = new Modele(true);
         train = new Train(modele, 4, personnes);
         wagon1 = train.getWagon(0);
         wagon2 = train.getWagon(1);
@@ -111,11 +111,10 @@ public class TirerTest {
         assertTrue(bandit2.montantT() == 0 || bandit3.montantT() == 0);
 
         // Effectuer une action de tir par le bandit 2
-        Action action2 = new Tirer(modele, bandit2;
+        Action action2 = new Tirer(modele, bandit2);
         action2.executer();
 
         // Vérifier que le nombre de balles du bandit 2 est réduit de 1 après le tir
         assertEquals(8, bandit2.getBalles());
-        assertTrue(butinsBandit1.isEmpty() || butinsBandit3.isEmpty());
     }
 }

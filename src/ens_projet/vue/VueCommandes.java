@@ -1,6 +1,7 @@
 package ens_projet.vue;
 
 import ens_projet.controleur.Bouton;
+import ens_projet.controleur.Controleur;
 import ens_projet.modele.Bandit;
 import ens_projet.modele.Direction;
 import ens_projet.modele.Modele;
@@ -17,6 +18,7 @@ public class VueCommandes extends JPanel {
     private final Modele m;
     private Bouton banditDeplacerHaut, banditDeplacerBas, banditDeplacerAvant, banditDeplacerArriere;
     private Bouton banditBraquer, banditTirer, banditAction;
+
     public VueCommandes(Modele m) {
         this.m = m;
         setPreferredSize(new Dimension(1000, 200));
@@ -43,6 +45,7 @@ public class VueCommandes extends JPanel {
         add(banditDeplacerArriere);
         add(banditDeplacerBas);
         add(banditDeplacerHaut);
+
 
         // Position et dimension des boutons "Braquer" et "Tirer"
         banditBraquer = new Bouton("Braquer", centralSquare[1] + centralSquare[0] + size + 50, centralSquare[2] - size/2, size * 3, size * 2);

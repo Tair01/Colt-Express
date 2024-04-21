@@ -22,7 +22,7 @@ public class BanditTest {
     @Before
     public void setUp() {
         // Initialisation des objets pour les tests
-        modele = new Modele();
+        modele = new Modele(true);
         train = new Train(modele, 4, personnes); // Passer le modèle comme paramètre au train
         bandit1 = new Bandit(modele, "Alex", train); // Passer le modèle comme paramètre au bandit
         bandit2 = new Bandit(modele, "Souleimane", train);

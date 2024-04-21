@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Controleur implements MouseListener {
     private final Modele modele;
-    private final VueCommandes vueC;
+    private  VueCommandes vueC;
 
     // 0 : mode planification, 1 : mode action !
     boolean mode;
@@ -32,13 +32,15 @@ public class Controleur implements MouseListener {
 
     int indiceBanditEnCours;
 
-    public Controleur(Modele m, VueCommandes vC) {
-        modele = m;
-        vueC = vC;
+
+    public Controleur(Modele m, VueCommandes vueC) {
+        this.vueC = vueC;
         assert vueC != null;
         vueC.addMouseListener(this);
+        modele = m;
         actions = new Action[modele.getBandits().size()][Bandit.NB_ACTIONS];
     }
+
 
     public String getModeStr(){
         return mode ? "Planification" : "Action !";
