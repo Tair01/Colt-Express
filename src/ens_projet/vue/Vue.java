@@ -32,7 +32,7 @@ public class Vue {
         frame.add(vueE, BorderLayout.WEST);
         controleur = new Controleur(model, vueC);
         frame.add(vueC, BorderLayout.SOUTH);
-        frame.addMouseListener(controleur);
+        //frame.addMouseListener(controleur);
         frame.pack();
         frame.setVisible(true);
         vueC.repaint();

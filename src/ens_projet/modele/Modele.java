@@ -151,9 +151,10 @@ public class Modele extends Observable {
         while(modele.partieFinie() == null) {
             controleur.setBanditEnCours(modele.getBandits().get(0));
             controleur.setMode(false);
-            while(!modele.isActionMode()) {
-            }
-            modele.executeActions();
+            controleur.setIndiceBanditEnCours(0);
+            //while(!modele.isActionMode()) {
+            //}
+            //modele.executeActions();
         }
     }
 }

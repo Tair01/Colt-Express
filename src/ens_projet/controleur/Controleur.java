@@ -5,11 +5,13 @@ import ens_projet.modele.Action;
 import ens_projet.vue.VueCommandes;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-public class Controleur implements MouseListener {
+public class Controleur implements ActionListener {
     private final Modele modele;
     private  VueCommandes vueC;
 
@@ -36,7 +38,14 @@ public class Controleur implements MouseListener {
     public Controleur(Modele m, VueCommandes vueC) {
         this.vueC = vueC;
         assert vueC != null;
-        vueC.addMouseListener(this);
+        vueC.getBanditDeplacer(Direction.HAUT).addActionListener(this);
+        vueC.getBanditDeplacer(Direction.BAS).addActionListener(this);
+        vueC.getBanditDeplacer(Direction.AVANT).addActionListener(this);
+        vueC.getBanditDeplacer(Direction.ARRIERE).addActionListener(this);
+        vueC.getBanditAction().addActionListener(this);
+        vueC.getBanditTirer().addActionListener(this);
+        vueC.getBanditBraquer().addActionListener(this);
+
         modele = m;
         actions = new Action[modele.getBandits().size()][Bandit.NB_ACTIONS];
     }
@@ -52,19 +61,18 @@ public class Controleur implements MouseListener {
         //vueC.setModeLabel(getModeStr());
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        int mouseX = e.getX();
-        int mouseY = e.getY();
+    /*@Override
+    public void mouseClicked(ActionEvent  e) {
         if(mode) { // Si en mode planification
             Action newAction = determineAction(mouseX, mouseY);
             if(newAction != null) {
                 int i = 0;
                 while(i < Bandit.NB_ACTIONS && actions[indiceBanditEnCours][i] != null) i++;
                 if(i < Bandit.NB_ACTIONS) actions[indiceBanditEnCours][i] = newAction;
+                System.out.println("vcffffff");
             }
         } else { // Si en mode action !
-            if(vueC.getBanditAction().contains(mouseX, mouseY) && compteurI < modele.getBandits().size() && compteurJ < Bandit.NB_ACTIONS) {
+            if(vueC.getBanditAction() && compteurI < modele.getBandits().size() && compteurJ < Bandit.NB_ACTIONS) {
                 Action actionToExecute = actions[compteurI][compteurJ];
                 if (actionToExecute != null) {
                     String msg = actionToExecute.executer();
@@ -81,47 +89,72 @@ public class Controleur implements MouseListener {
                 }
             }
         }
-    }
+    }*/
 
-    private Action determineAction(int mouseX, int mouseY) {
+    private Action determineAction(ActionEvent e) {
         // Retourne l'action correspondante selon le bouton cliqué
         Action newAction = null;
-        if(vueC.getBanditDeplacer(Direction.HAUT).contains(mouseX, mouseY)) {
+        if(e.getSource()  == vueC.getBanditDeplacer(Direction.HAUT)) {
             newAction = new Deplacer(modele, banditEnCours, Direction.HAUT);
         }
-        else if(vueC.getBanditDeplacer(Direction.BAS).contains(mouseX, mouseY)) {
+        else if(e.getSource()  ==  vueC.getBanditDeplacer(Direction.BAS)) {
             newAction = new Deplacer(modele, banditEnCours, Direction.BAS);
         }
-        else if(vueC.getBanditDeplacer(Direction.AVANT).contains(mouseX, mouseY)) {
+        else if(e.getSource()  ==  vueC.getBanditDeplacer(Direction.AVANT)) {
             newAction = new Deplacer(modele, banditEnCours, Direction.AVANT);
         }
-        else if(vueC.getBanditDeplacer(Direction.ARRIERE).contains(mouseX, mouseY)) {
+        else if(e.getSource()  ==  vueC.getBanditDeplacer(Direction.ARRIERE)) {
             newAction = new Deplacer(modele, banditEnCours, Direction.ARRIERE);
         }
-        else if(vueC.getBanditBraquer().contains(mouseX, mouseY)) {
+        else if(e.getSource()  ==  vueC.getBanditBraquer()) {
             newAction = new Braquer(modele, banditEnCours);
         }
-        else if(vueC.getBanditTirer().contains(mouseX, mouseY)) {
+        else if(e.getSource()  ==  vueC.getBanditTirer()) {
             newAction = new Tirer(modele, banditEnCours);
         }
         return newAction;
     }
 
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
+
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-    }
+    public void actionPerformed(ActionEvent e) {
+        //System.out.println("vcffffff");
+        int i = 0;
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
+        if(!mode) { // Si en mode planification
+            //jhk
+            // System.out.println("vcffffff");
+            Action newAction = determineAction(e);
+            if(newAction != null) {
+                while(i < Bandit.NB_ACTIONS && indiceBanditEnCours < Modele.NB_JOUEURS && actions[indiceBanditEnCours][i] != null) i++;
+                if(i < Bandit.NB_ACTIONS && indiceBanditEnCours < Modele.NB_JOUEURS) actions[indiceBanditEnCours][i] = newAction;
+                else {
+                    if(indiceBanditEnCours < Modele.NB_JOUEURS) indiceBanditEnCours++;
+                    else mode = !mode;
+                }
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
+            }
+        } else { // Si en mode action !
 
+            if(e.getSource() == vueC.getBanditAction() && compteurI < modele.getBandits().size() && compteurJ < Bandit.NB_ACTIONS) {
+                Action actionToExecute = actions[compteurI][compteurJ];
+                if (actionToExecute != null) {
+                    String msg = actionToExecute.executer();
+                    System.out.println((msg != null && !msg.isEmpty()) ? msg : "Action impossible, non-effectuée");
+                }
+                compteurJ++;
+                if(compteurJ >= Bandit.NB_ACTIONS) {
+                    compteurJ = 0;
+                    compteurI++;
+                    if(compteurI >= modele.getBandits().size()) {
+                        System.out.println("Toutes les actions ont été effectuées !");
+                        compteurI = 0;  // Réinitialiser pour le prochain tour
+                    }
+                }
+            }
+        }
+
+    }
 }
